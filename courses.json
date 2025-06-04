@@ -1,0 +1,660 @@
+{
+    "courses": [
+        {
+            "name": "Python Fundamentals",
+            "category": "Programming",
+            "total_chapters": 5,
+            "total_lectures": 15,
+            "difficulty_level": "Beginner",
+            "description": "Master the basics of Python programming",
+            "videos": [
+                {
+                    "title": "Python Variables and Data Types",
+                    "url": "https://www.youtube.com/watch?v=khKv-8q7YmY",
+                    "difficulty": "easy",
+                    "intro_text": "In this lesson, we'll learn about Python variables and different data types. Variables are containers for storing data values, and Python has several built-in data types.",
+                    "quizzes": [
+                        {
+                            "question": "Which of these is a valid Python variable name?",
+                            "options": ["2myvar", "my_var", "my-var"],
+                            "correct": "my_var",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the type of 3.14 in Python?",
+                            "options": ["int", "float", "decimal"],
+                            "correct": "float",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What will be the output of: type('123')?",
+                            "options": ["int", "str", "number"],
+                            "correct": "str",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Temperature Converter",
+                            "description": "Write a function that converts temperature from Celsius to Fahrenheit. The formula is: (C × 9/5) + 32 = F",
+                            "difficulty": "easy",
+                            "starter_code": "def celsius_to_fahrenheit(celsius):\n    # Your code here\n    pass\n\n# Test your function\nprint(celsius_to_fahrenheit(0))  # Should print 32.0\nprint(celsius_to_fahrenheit(100))  # Should print 212.0",
+                            "test_cases": [
+                                {"input": 0, "expected": 32.0},
+                                {"input": 100, "expected": 212.0},
+                                {"input": -40, "expected": -40.0}
+                            ],
+                            "hints": ["Remember to use floating-point numbers for precise calculation", "The formula is: (celsius * 9/5) + 32"]
+                        }
+                    ]
+                },
+                {
+                    "title": "Python Lists and Loops",
+                    "url": "https://www.youtube.com/watch?v=Zp5MuPOtsSY",
+                    "difficulty": "medium",
+                    "intro_text": "Learn how to work with lists and iterate through them using loops in Python.",
+                    "quizzes": [
+                        {
+                            "question": "What method adds an element to the end of a list?",
+                            "options": ["add()", "append()", "insert()"],
+                            "correct": "append()",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the output of: [1,2,3][:2]?",
+                            "options": ["[1]", "[1,2]", "[2,3]"],
+                            "correct": "[1,2]",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "Which loop is used when you know the number of iterations?",
+                            "options": ["while loop", "for loop", "do-while loop"],
+                            "correct": "for loop",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "List Sum Calculator",
+                            "description": "Write a function that calculates the sum of all even numbers in a list.",
+                            "difficulty": "medium",
+                            "starter_code": "def sum_even_numbers(numbers):\n    # Your code here\n    pass\n\n# Test your function\nprint(sum_even_numbers([1, 2, 3, 4, 5, 6]))  # Should print 12\nprint(sum_even_numbers([1, 3, 5]))  # Should print 0",
+                            "test_cases": [
+                                {"input": [1, 2, 3, 4, 5, 6], "expected": 12},
+                                {"input": [1, 3, 5], "expected": 0},
+                                {"input": [2, 4, 6], "expected": 12}
+                            ],
+                            "hints": ["Use a for loop to iterate through the list", "Use the modulo operator % to check if a number is even"]
+                        }
+                    ]
+                },
+                {
+                    "title": "Python Strings and String Methods",
+                    "url": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+                    "difficulty": "medium",
+                    "intro_text": "Explore string manipulation and built-in string methods in Python.",
+                    "quizzes": [
+                        {
+                            "question": "What is string slicing in Python?",
+                            "options": ["Cutting strings with scissors", "Extracting parts of a string", "Joining two strings"],
+                            "correct": "Extracting parts of a string",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What does the strip() method do?",
+                            "options": ["Removes all spaces", "Removes leading and trailing whitespace", "Removes characters from middle"],
+                            "correct": "Removes leading and trailing whitespace",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the output of: 'hello'.upper()?",
+                            "options": ["Hello", "HELLO", "hello"],
+                            "correct": "HELLO",
+                            "difficulty": "easy"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "String Reverser",
+                            "description": "Write a function that reverses a string without using the built-in reverse function.",
+                            "difficulty": "medium",
+                            "starter_code": "def reverse_string(text):\n    # Your code here\n    pass\n\n# Test your function\nprint(reverse_string('hello'))  # Should print 'olleh'\nprint(reverse_string('Python'))  # Should print 'nohtyP'",
+                            "test_cases": [
+                                {"input": "hello", "expected": "olleh"},
+                                {"input": "Python", "expected": "nohtyP"},
+                                {"input": "12345", "expected": "54321"}
+                            ],
+                            "hints": ["You can access string characters using indices", "Try using a loop or string slicing"]
+                        }
+                    ]
+                },
+                {
+                    "title": "Python Dictionaries",
+                    "url": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about Python dictionaries, their methods, and common operations.",
+                    "quizzes": [
+                        {
+                            "question": "What happens when you try to access a key that doesn't exist?",
+                            "options": ["Returns None", "Raises KeyError", "Returns False"],
+                            "correct": "Raises KeyError",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "Which method removes all items from a dictionary?",
+                            "options": ["delete()", "clear()", "remove()"],
+                            "correct": "clear()",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the output of: dict.get('key', 'default')?",
+                            "options": ["Raises error if key missing", "Returns None if key missing", "Returns 'default' if key missing"],
+                            "correct": "Returns 'default' if key missing",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Dictionary Frequency Counter",
+                            "description": "Write a function that counts the frequency of each character in a string using a dictionary.",
+                            "difficulty": "hard",
+                            "starter_code": "def char_frequency(text):\n    # Your code here\n    pass\n\n# Test your function\nprint(char_frequency('hello'))  # Should print {'h': 1, 'e': 1, 'l': 2, 'o': 1}\nprint(char_frequency('python'))  # Should print {'p': 1, 'y': 1, 't': 1, 'h': 1, 'o': 1, 'n': 1}",
+                            "test_cases": [
+                                {"input": "hello", "expected": {"h": 1, "e": 1, "l": 2, "o": 1}},
+                                {"input": "python", "expected": {"p": 1, "y": 1, "t": 1, "h": 1, "o": 1, "n": 1}},
+                                {"input": "aaa", "expected": {"a": 3}}
+                            ],
+                            "hints": ["Use a dictionary to store character counts", "Loop through each character in the string"]
+                        }
+                    ]
+                },
+                {
+                    "title": "Python Error Handling",
+                    "url": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+                    "difficulty": "hard",
+                    "intro_text": "Learn how to handle errors and exceptions in Python effectively.",
+                    "quizzes": [
+                        {
+                            "question": "What is the purpose of try-except?",
+                            "options": ["Speed up code", "Handle errors", "Format code"],
+                            "correct": "Handle errors",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the finally block used for?",
+                            "options": ["Only runs on error", "Always runs", "Only runs if no error"],
+                            "correct": "Always runs",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "Which is not a built-in exception?",
+                            "options": ["ValueError", "TypeError", "ErrorValue"],
+                            "correct": "ErrorValue",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Safe Division Function",
+                            "description": "Write a function that safely divides two numbers and handles potential errors (zero division, type errors, etc.).",
+                            "difficulty": "hard",
+                            "starter_code": "def safe_divide(a, b):\n    # Your code here\n    pass\n\n# Test your function\nprint(safe_divide(10, 2))  # Should print 5.0\nprint(safe_divide(10, 0))  # Should print 'Error: Division by zero'\nprint(safe_divide('10', '2'))  # Should print 'Error: Invalid input types'",
+                            "test_cases": [
+                                {"input": [10, 2], "expected": 5.0},
+                                {"input": [10, 0], "expected": "Error: Division by zero"},
+                                {"input": ["10", "2"], "expected": "Error: Invalid input types"}
+                            ],
+                            "hints": ["Use try-except blocks", "Check for different types of errors", "Return appropriate error messages"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Python Functions and OOP",
+            "category": "Programming",
+            "total_chapters": 5,
+            "total_lectures": 15,
+            "difficulty_level": "Intermediate",
+            "description": "Learn functions and object-oriented programming in Python",
+            "videos": [
+                {
+                    "title": "Python Functions Deep Dive",
+                    "url": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+                    "intro_text": "Learn about Python functions, their syntax, and how to use them effectively.",
+                    "quizzes": [
+                        {
+                            "question": "What keyword defines a function?",
+                            "options": ["func", "def", "function"],
+                            "correct": "def",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What does return do in a function?",
+                            "options": ["Prints a value", "Sends back a value", "Deletes a value"],
+                            "correct": "Sends back a value",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What are function parameters?",
+                            "options": ["Return values", "Input values", "Print statements"],
+                            "correct": "Input values",
+                            "difficulty": "easy"
+                        }
+                    ]
+                },
+                {
+                    "title": "Object Oriented Programming",
+                    "url": "https://www.youtube.com/watch?v=-pEs-Bss8Wc",
+                    "intro_text": "Understand the basics of Object-Oriented Programming in Python.",
+                    "quizzes": [
+                        {
+                            "question": "What method is called when creating a new object?",
+                            "options": ["__init__", "__main__", "__str__"],
+                            "correct": "__init__",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is self in a class method?",
+                            "options": ["A variable name", "Reference to instance", "A function"],
+                            "correct": "Reference to instance",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is inheritance in OOP?",
+                            "options": ["Creating objects", "Reusing code", "Defining methods"],
+                            "correct": "Reusing code",
+                            "difficulty": "hard"
+                        }
+                    ]
+                },
+                {
+                    "title": "Advanced Function Concepts",
+                    "url": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+                    "intro_text": "Dive into advanced function concepts like decorators and generators.",
+                    "quizzes": [
+                        {
+                            "question": "What is a decorator in Python?",
+                            "options": ["A class method", "A function that modifies another function", "A type of loop"],
+                            "correct": "A function that modifies another function",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What does *args allow in a function?",
+                            "options": ["Multiple return values", "Variable number of arguments", "Keyword arguments only"],
+                            "correct": "Variable number of arguments",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is a generator function?",
+                            "options": ["Creates random numbers", "Returns values one at a time", "Creates new functions"],
+                            "correct": "Returns values one at a time",
+                            "difficulty": "hard"
+                        }
+                    ]
+                },
+                {
+                    "title": "Class Inheritance and Polymorphism",
+                    "url": "https://www.youtube.com/watch?v=-pEs-Bss8Wc",
+                    "intro_text": "Learn about inheritance hierarchies and polymorphism in Python classes.",
+                    "quizzes": [
+                        {
+                            "question": "What is method overriding?",
+                            "options": ["Creating a new method", "Changing a parent class method", "Deleting a method"],
+                            "correct": "Changing a parent class method",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is multiple inheritance?",
+                            "options": ["Having multiple classes", "Inheriting from multiple parent classes", "Having multiple objects"],
+                            "correct": "Inheriting from multiple parent classes",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is polymorphism?",
+                            "options": ["Having many forms", "Having many classes", "Having many objects"],
+                            "correct": "Having many forms",
+                            "difficulty": "hard"
+                        }
+                    ]
+                },
+                {
+                    "title": "Special Methods and Properties",
+                    "url": "https://www.youtube.com/watch?v=-pEs-Bss8Wc",
+                    "intro_text": "Explore special methods (magic methods) and properties in Python classes.",
+                    "quizzes": [
+                        {
+                            "question": "What is the purpose of __str__?",
+                            "options": ["Convert to string", "Create a string", "Print a string"],
+                            "correct": "Convert to string",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What does the @property decorator do?",
+                            "options": ["Creates a method", "Makes an attribute read-only", "Defines a property"],
+                            "correct": "Defines a property",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is operator overloading?",
+                            "options": ["Creating new operators", "Customizing operator behavior", "Removing operators"],
+                            "correct": "Customizing operator behavior",
+                            "difficulty": "hard"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Web Development Fundamentals",
+            "category": "Web Development",
+            "total_chapters": 6,
+            "total_lectures": 18,
+            "difficulty_level": "Beginner",
+            "description": "Learn the basics of web development with HTML, CSS, and JavaScript",
+            "videos": [
+                {
+                    "title": "HTML Basics",
+                    "url": "https://www.youtube.com/watch?v=UB1O30fR-EE",
+                    "difficulty": "easy",
+                    "intro_text": "Learn the fundamentals of HTML and how to structure web pages.",
+                    "quizzes": [
+                        {
+                            "question": "What does HTML stand for?",
+                            "options": ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Logic"],
+                            "correct": "Hyper Text Markup Language",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "Which tag is used for creating a hyperlink?",
+                            "options": ["<link>", "<a>", "<href>"],
+                            "correct": "<a>",
+                            "difficulty": "easy"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Create a Simple Webpage",
+                            "description": "Create a webpage with a heading, paragraph, and a list of items.",
+                            "difficulty": "easy",
+                            "starter_code": "<!DOCTYPE html>\n<html>\n<head>\n    <title>My First Page</title>\n</head>\n<body>\n    <!-- Add your code here -->\n</body>\n</html>",
+                            "test_cases": [
+                                {"input": "Check for <h1>", "expected": true},
+                                {"input": "Check for <p>", "expected": true},
+                                {"input": "Check for <ul> or <ol>", "expected": true}
+                            ],
+                            "hints": ["Use <h1> for main heading", "Use <p> for paragraphs", "Use <ul> or <ol> for lists"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Data Science Essentials",
+            "category": "Data Science",
+            "total_chapters": 7,
+            "total_lectures": 21,
+            "difficulty_level": "Intermediate",
+            "description": "Master the fundamentals of data science using Python",
+            "videos": [
+                {
+                    "title": "Introduction to NumPy",
+                    "url": "https://www.youtube.com/watch?v=QUT1VHiLmmI",
+                    "difficulty": "medium",
+                    "intro_text": "Learn about NumPy arrays and basic operations in data science.",
+                    "quizzes": [
+                        {
+                            "question": "What is the primary data structure in NumPy?",
+                            "options": ["List", "Array", "DataFrame"],
+                            "correct": "Array",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "Which function creates an array of zeros?",
+                            "options": ["np.zeros()", "np.empty()", "np.null()"],
+                            "correct": "np.zeros()",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Array Operations",
+                            "description": "Create and manipulate NumPy arrays with basic operations.",
+                            "difficulty": "medium",
+                            "starter_code": "import numpy as np\n\ndef array_operations():\n    # Create a 3x3 array of zeros\n    # Perform operations\n    pass",
+                            "test_cases": [
+                                {"input": "Check array shape", "expected": "(3, 3)"},
+                                {"input": "Check array sum", "expected": 0}
+                            ],
+                            "hints": ["Use np.zeros() for initialization", "Remember array broadcasting rules"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Machine Learning Basics",
+            "category": "Data Science",
+            "total_chapters": 8,
+            "total_lectures": 24,
+            "difficulty_level": "Advanced",
+            "description": "Introduction to machine learning concepts and algorithms",
+            "videos": [
+                {
+                    "title": "Supervised Learning",
+                    "url": "https://www.youtube.com/watch?v=JcI5Vnw0b2c",
+                    "difficulty": "hard",
+                    "intro_text": "Understand supervised learning algorithms and their applications.",
+                    "quizzes": [
+                        {
+                            "question": "What is supervised learning?",
+                            "options": ["Learning without labels", "Learning with labeled data", "Learning by observation"],
+                            "correct": "Learning with labeled data",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Linear Regression",
+                            "description": "Implement a simple linear regression model.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\ndef linear_regression(X, y):\n    # Implement linear regression\n    pass",
+                            "test_cases": [
+                                {"input": "Check prediction shape", "expected": "(n_samples,)"},
+                                {"input": "Check coefficient shape", "expected": "(n_features,)"}
+                            ],
+                            "hints": ["Use np.dot() for matrix multiplication", "Remember to add bias term"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "JavaScript Advanced Concepts",
+            "category": "Web Development",
+            "total_chapters": 6,
+            "total_lectures": 18,
+            "difficulty_level": "Advanced",
+            "description": "Deep dive into advanced JavaScript concepts",
+            "videos": [
+                {
+                    "title": "Promises and Async/Await",
+                    "url": "https://www.youtube.com/watch?v=V_Kr9OSfDeU",
+                    "difficulty": "hard",
+                    "intro_text": "Master asynchronous programming in JavaScript.",
+                    "quizzes": [
+                        {
+                            "question": "What is a Promise?",
+                            "options": ["A function", "An object representing future completion", "A variable type"],
+                            "correct": "An object representing future completion",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Async Data Fetching",
+                            "description": "Implement an async function to fetch and process data.",
+                            "difficulty": "hard",
+                            "starter_code": "async function fetchData() {\n    // Implement async data fetching\n}",
+                            "test_cases": [
+                                {"input": "Check async/await usage", "expected": true},
+                                {"input": "Check error handling", "expected": true}
+                            ],
+                            "hints": ["Use try/catch for error handling", "Remember to await fetch calls"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Mobile App Development",
+            "category": "Mobile Development",
+            "total_chapters": 7,
+            "total_lectures": 21,
+            "difficulty_level": "Intermediate",
+            "description": "Learn to build mobile apps using React Native",
+            "videos": [
+                {
+                    "title": "React Native Basics",
+                    "url": "https://www.youtube.com/watch?v=0-S5a0eXPoc",
+                    "difficulty": "medium",
+                    "intro_text": "Get started with React Native development.",
+                    "quizzes": [
+                        {
+                            "question": "What is React Native?",
+                            "options": ["A database", "A mobile framework", "A programming language"],
+                            "correct": "A mobile framework",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Create a Simple Screen",
+                            "description": "Build a basic mobile screen with React Native components.",
+                            "difficulty": "medium",
+                            "starter_code": "import React from 'react';\nimport { View, Text } from 'react-native';\n\nexport default function MyScreen() {\n    // Implement screen\n}",
+                            "test_cases": [
+                                {"input": "Check View usage", "expected": true},
+                                {"input": "Check Text usage", "expected": true}
+                            ],
+                            "hints": ["Use View for containers", "Style with StyleSheet"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Database Design",
+            "category": "Database",
+            "total_chapters": 5,
+            "total_lectures": 15,
+            "difficulty_level": "Intermediate",
+            "description": "Learn database design principles and SQL",
+            "videos": [
+                {
+                    "title": "SQL Fundamentals",
+                    "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+                    "difficulty": "medium",
+                    "intro_text": "Master SQL queries and database design.",
+                    "quizzes": [
+                        {
+                            "question": "What is a primary key?",
+                            "options": ["A unique identifier", "A foreign key", "A table name"],
+                            "correct": "A unique identifier",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Write SQL Queries",
+                            "description": "Create SQL queries for common database operations.",
+                            "difficulty": "medium",
+                            "starter_code": "-- Write your SQL queries here\n",
+                            "test_cases": [
+                                {"input": "SELECT query", "expected": true},
+                                {"input": "JOIN usage", "expected": true}
+                            ],
+                            "hints": ["Use SELECT for querying", "Remember JOIN syntax"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cloud Computing Fundamentals",
+            "category": "Cloud Computing",
+            "total_chapters": 6,
+            "total_lectures": 18,
+            "difficulty_level": "Beginner",
+            "description": "Introduction to cloud computing concepts",
+            "videos": [
+                {
+                    "title": "Cloud Services Overview",
+                    "url": "https://www.youtube.com/watch?v=M988_fsOSWo",
+                    "difficulty": "easy",
+                    "intro_text": "Learn about different cloud service models.",
+                    "quizzes": [
+                        {
+                            "question": "What is IaaS?",
+                            "options": ["Infrastructure as a Service", "Internet as a Service", "Integration as a Service"],
+                            "correct": "Infrastructure as a Service",
+                            "difficulty": "easy"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Deploy to Cloud",
+                            "description": "Deploy a simple application to a cloud platform.",
+                            "difficulty": "medium",
+                            "starter_code": "# Cloud deployment configuration\n",
+                            "test_cases": [
+                                {"input": "Check configuration", "expected": true},
+                                {"input": "Check deployment", "expected": true}
+                            ],
+                            "hints": ["Follow cloud provider guidelines", "Check security settings"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Cybersecurity Basics",
+            "category": "Security",
+            "total_chapters": 7,
+            "total_lectures": 21,
+            "difficulty_level": "Intermediate",
+            "description": "Learn fundamental concepts of cybersecurity",
+            "videos": [
+                {
+                    "title": "Security Fundamentals",
+                    "url": "https://www.youtube.com/watch?v=bPVaOlJ6ln0",
+                    "difficulty": "medium",
+                    "intro_text": "Understand basic security concepts and practices.",
+                    "quizzes": [
+                        {
+                            "question": "What is encryption?",
+                            "options": ["Data compression", "Data transformation", "Data deletion"],
+                            "correct": "Data transformation",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Implement Encryption",
+                            "description": "Create a simple encryption/decryption program.",
+                            "difficulty": "hard",
+                            "starter_code": "def encrypt(text, key):\n    # Implement encryption\n    pass",
+                            "test_cases": [
+                                {"input": "hello", "expected": "encrypted"},
+                                {"input": "encrypted", "expected": "hello"}
+                            ],
+                            "hints": ["Use XOR for simple encryption", "Remember to handle edge cases"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+  
+  
