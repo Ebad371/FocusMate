@@ -370,6 +370,12 @@
                             "options": ["<link>", "<a>", "<href>"],
                             "correct": "<a>",
                             "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the purpose of the <head> tag?",
+                            "options": ["Display headings", "Contains metadata", "Style the page"],
+                            "correct": "Contains metadata",
+                            "difficulty": "medium"
                         }
                     ],
                     "coding_exercises": [
@@ -381,13 +387,196 @@
                             "test_cases": [
                                 {"input": "Check for header section", "expected": true},
                                 {"input": "Check for nav section", "expected": true},
-                                {"input": "Check for main content", "expected": true},
-                                {"input": "Check for footer", "expected": true}
+                                {"input": "Check for main content", "expected": true}
                             ],
                             "hints": [
                                 "Use semantic HTML5 tags like <header>, <nav>, <main>, and <footer>",
                                 "Add meaningful content in each section",
                                 "Don't forget to use proper heading hierarchy"
+                            ]
+                        },
+                        {
+                            "title": "Create a Navigation Menu",
+                            "description": "Create a navigation menu with links to different sections of the website.",
+                            "difficulty": "medium",
+                            "starter_code": "<!-- Create a navigation menu here -->\n",
+                            "test_cases": [
+                                {"input": "Check for nav element", "expected": true},
+                                {"input": "Check for list structure", "expected": true},
+                                {"input": "Check for working links", "expected": true}
+                            ],
+                            "hints": [
+                                "Use <nav> tag for semantic navigation",
+                                "Use unordered list for menu items",
+                                "Include proper href attributes in links"
+                            ]
+                        },
+                        {
+                            "title": "Build a Contact Form",
+                            "description": "Create an HTML form for user contact information.",
+                            "difficulty": "medium",
+                            "starter_code": "<!-- Create a contact form here -->\n",
+                            "test_cases": [
+                                {"input": "Check for form element", "expected": true},
+                                {"input": "Check for required fields", "expected": true},
+                                {"input": "Check for submit button", "expected": true}
+                            ],
+                            "hints": [
+                                "Use appropriate input types for different fields",
+                                "Add labels for accessibility",
+                                "Include form validation attributes"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "CSS Fundamentals",
+                    "url": "https://www.youtube.com/watch?v=1PnVor36_40",
+                    "difficulty": "medium",
+                    "intro_text": "Learn how to style web pages using CSS.",
+                    "quizzes": [
+                        {
+                            "question": "What does CSS stand for?",
+                            "options": ["Cascading Style Sheets", "Computer Style System", "Creative Style Sheets"],
+                            "correct": "Cascading Style Sheets",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "Which property changes text color?",
+                            "options": ["text-color", "color", "font-color"],
+                            "correct": "color",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the box model in CSS?",
+                            "options": ["A 3D modeling tool", "Content, padding, border, and margin", "A layout template"],
+                            "correct": "Content, padding, border, and margin",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Style a Navigation Bar",
+                            "description": "Create a horizontal navigation bar with hover effects.",
+                            "difficulty": "medium",
+                            "starter_code": "/* Add your CSS styles here */\n.navbar {\n\n}\n\n.navbar a {\n\n}\n\n.navbar a:hover {\n\n}",
+                            "test_cases": [
+                                {"input": "Check horizontal layout", "expected": true},
+                                {"input": "Check hover effect", "expected": true},
+                                {"input": "Check spacing", "expected": true}
+                            ],
+                            "hints": [
+                                "Use display: flex for horizontal layout",
+                                "Add padding and margin for spacing",
+                                "Use :hover pseudo-class for effects"
+                            ]
+                        },
+                        {
+                            "title": "Responsive Grid Layout",
+                            "description": "Create a responsive grid layout that adapts to different screen sizes.",
+                            "difficulty": "hard",
+                            "starter_code": "/* Create responsive grid layout */\n.grid-container {\n\n}\n\n.grid-item {\n\n}",
+                            "test_cases": [
+                                {"input": "Check grid layout", "expected": true},
+                                {"input": "Check responsiveness", "expected": true},
+                                {"input": "Check item spacing", "expected": true}
+                            ],
+                            "hints": [
+                                "Use CSS Grid or Flexbox",
+                                "Implement media queries",
+                                "Consider gap property for spacing"
+                            ]
+                        },
+                        {
+                            "title": "Custom Button Styles",
+                            "description": "Create styled buttons with different states (normal, hover, active).",
+                            "difficulty": "medium",
+                            "starter_code": "/* Style custom buttons */\n.button {\n\n}\n\n.button:hover {\n\n}\n\n.button:active {\n\n}",
+                            "test_cases": [
+                                {"input": "Check normal state", "expected": true},
+                                {"input": "Check hover state", "expected": true},
+                                {"input": "Check active state", "expected": true}
+                            ],
+                            "hints": [
+                                "Use gradients for background",
+                                "Add transition effects",
+                                "Include box-shadow for depth"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "JavaScript Basics",
+                    "url": "https://www.youtube.com/watch?v=W6NZfCO5SIk",
+                    "difficulty": "medium",
+                    "intro_text": "Learn the fundamentals of JavaScript programming.",
+                    "quizzes": [
+                        {
+                            "question": "What is the correct way to declare a variable in modern JavaScript?",
+                            "options": ["var x", "let x", "variable x"],
+                            "correct": "let x",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the typeof operator used for?",
+                            "options": ["Check if variable exists", "Determine data type", "Convert data types"],
+                            "correct": "Determine data type",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is event bubbling?",
+                            "options": ["Creating new events", "Event propagation from child to parent", "Removing events"],
+                            "correct": "Event propagation from child to parent",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Form Validation",
+                            "description": "Create a form validation script that checks user input.",
+                            "difficulty": "medium",
+                            "starter_code": "function validateForm() {\n    // Add validation logic here\n}",
+                            "test_cases": [
+                                {"input": "Empty input", "expected": false},
+                                {"input": "Valid email", "expected": true},
+                                {"input": "Invalid phone", "expected": false}
+                            ],
+                            "hints": [
+                                "Use regular expressions",
+                                "Check input length",
+                                "Provide user feedback"
+                            ]
+                        },
+                        {
+                            "title": "Todo List Manager",
+                            "description": "Create a simple todo list with add, remove, and toggle completion features.",
+                            "difficulty": "medium",
+                            "starter_code": "class TodoList {\n    constructor() {\n        // Initialize todo list\n    }\n\n    addItem(text) {\n        // Add implementation\n    }\n\n    removeItem(id) {\n        // Add implementation\n    }\n\n    toggleComplete(id) {\n        // Add implementation\n    }\n}",
+                            "test_cases": [
+                                {"input": "Add item", "expected": "item added"},
+                                {"input": "Remove item", "expected": "item removed"},
+                                {"input": "Toggle complete", "expected": "status toggled"}
+                            ],
+                            "hints": [
+                                "Use array methods",
+                                "Implement event listeners",
+                                "Update DOM efficiently"
+                            ]
+                        },
+                        {
+                            "title": "API Data Fetching",
+                            "description": "Create a function to fetch and display data from an API.",
+                            "difficulty": "hard",
+                            "starter_code": "async function fetchData() {\n    // Implement API fetch\n}",
+                            "test_cases": [
+                                {"input": "Successful fetch", "expected": "data displayed"},
+                                {"input": "API error", "expected": "error handled"},
+                                {"input": "Loading state", "expected": "loading shown"}
+                            ],
+                            "hints": [
+                                "Use fetch or axios",
+                                "Handle loading states",
+                                "Implement error handling"
                             ]
                         }
                     ]
@@ -419,6 +608,12 @@
                             "options": ["np.zeros()", "np.empty()", "np.null()"],
                             "correct": "np.zeros()",
                             "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is broadcasting in NumPy?",
+                            "options": ["Sending data over network", "Automatic array size matching", "Printing arrays"],
+                            "correct": "Automatic array size matching",
+                            "difficulty": "hard"
                         }
                     ],
                     "coding_exercises": [
@@ -432,6 +627,180 @@
                                 {"input": "Check array sum", "expected": 0}
                             ],
                             "hints": ["Use np.zeros() for initialization", "Remember array broadcasting rules"]
+                        },
+                        {
+                            "title": "Matrix Multiplication",
+                            "description": "Implement matrix multiplication using NumPy arrays.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\ndef matrix_multiply(A, B):\n    # Implement matrix multiplication\n    pass",
+                            "test_cases": [
+                                {"input": "2x2 matrices", "expected": "correct product"},
+                                {"input": "3x3 matrices", "expected": "correct product"}
+                            ],
+                            "hints": [
+                                "Use np.dot() or @ operator",
+                                "Check matrix dimensions compatibility"
+                            ]
+                        },
+                        {
+                            "title": "Array Filtering",
+                            "description": "Filter arrays based on conditions using boolean indexing.",
+                            "difficulty": "medium",
+                            "starter_code": "import numpy as np\n\ndef filter_array(arr, condition):\n    # Implement array filtering\n    pass",
+                            "test_cases": [
+                                {"input": "Greater than 5", "expected": "filtered array"},
+                                {"input": "Less than 0", "expected": "filtered array"}
+                            ],
+                            "hints": [
+                                "Use boolean masks for filtering",
+                                "Apply conditions element-wise"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Pandas Data Analysis",
+                    "url": "https://www.youtube.com/watch?v=vmEHCJofslg",
+                    "difficulty": "medium",
+                    "intro_text": "Learn data manipulation and analysis with Pandas.",
+                    "quizzes": [
+                        {
+                            "question": "What is a DataFrame in Pandas?",
+                            "options": ["A picture frame", "A 2D labeled data structure", "A type of graph"],
+                            "correct": "A 2D labeled data structure",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "How do you select a column in a DataFrame?",
+                            "options": ["df[column_name]", "df.select(column)", "df.get(column)"],
+                            "correct": "df[column_name]",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the difference between loc and iloc?",
+                            "options": ["No difference", "loc uses labels, iloc uses positions", "loc is faster"],
+                            "correct": "loc uses labels, iloc uses positions",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Data Cleaning",
+                            "description": "Clean a dataset by handling missing values and duplicates.",
+                            "difficulty": "medium",
+                            "starter_code": "import pandas as pd\n\ndef clean_dataset(df):\n    # Implement data cleaning\n    pass",
+                            "test_cases": [
+                                {"input": "Dataset with missing values", "expected": "cleaned data"},
+                                {"input": "Dataset with duplicates", "expected": "unique rows"}
+                            ],
+                            "hints": [
+                                "Use dropna() or fillna()",
+                                "Check for duplicate rows",
+                                "Handle data type conversions"
+                            ]
+                        },
+                        {
+                            "title": "Data Aggregation",
+                            "description": "Perform groupby operations and calculate statistics.",
+                            "difficulty": "hard",
+                            "starter_code": "import pandas as pd\n\ndef aggregate_data(df, group_col):\n    # Implement aggregation\n    pass",
+                            "test_cases": [
+                                {"input": "Group by category", "expected": "correct stats"},
+                                {"input": "Multiple aggregations", "expected": "correct results"}
+                            ],
+                            "hints": [
+                                "Use groupby() method",
+                                "Apply multiple aggregation functions",
+                                "Handle group keys properly"
+                            ]
+                        },
+                        {
+                            "title": "Data Merging",
+                            "description": "Merge multiple datasets using different join types.",
+                            "difficulty": "hard",
+                            "starter_code": "import pandas as pd\n\ndef merge_datasets(df1, df2, join_type):\n    # Implement merging\n    pass",
+                            "test_cases": [
+                                {"input": "Inner join", "expected": "correct merge"},
+                                {"input": "Left join", "expected": "correct merge"}
+                            ],
+                            "hints": [
+                                "Choose appropriate merge type",
+                                "Handle key columns correctly",
+                                "Check for duplicate keys"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Data Visualization with Matplotlib",
+                    "url": "https://www.youtube.com/watch?v=UO98lJQ3QGI",
+                    "difficulty": "medium",
+                    "intro_text": "Master data visualization techniques using Matplotlib.",
+                    "quizzes": [
+                        {
+                            "question": "What is the basic plotting function in Matplotlib?",
+                            "options": ["show()", "plot()", "draw()"],
+                            "correct": "plot()",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "How do you create multiple subplots?",
+                            "options": ["multiple_plots()", "subplot()", "create_plot()"],
+                            "correct": "subplot()",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the purpose of plt.tight_layout()?",
+                            "options": ["Make plot smaller", "Adjust spacing between subplots", "Change plot style"],
+                            "correct": "Adjust spacing between subplots",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Basic Plotting",
+                            "description": "Create line plots and scatter plots with proper formatting.",
+                            "difficulty": "medium",
+                            "starter_code": "import matplotlib.pyplot as plt\n\ndef create_plots(x, y):\n    # Create and format plots\n    pass",
+                            "test_cases": [
+                                {"input": "Line plot data", "expected": "formatted plot"},
+                                {"input": "Scatter plot data", "expected": "formatted plot"}
+                            ],
+                            "hints": [
+                                "Add labels and title",
+                                "Customize line styles",
+                                "Add legend if needed"
+                            ]
+                        },
+                        {
+                            "title": "Advanced Visualizations",
+                            "description": "Create complex visualizations with multiple subplots.",
+                            "difficulty": "hard",
+                            "starter_code": "import matplotlib.pyplot as plt\n\ndef create_dashboard(data):\n    # Create multiple plots\n    pass",
+                            "test_cases": [
+                                {"input": "Multiple datasets", "expected": "dashboard layout"},
+                                {"input": "Different plot types", "expected": "correct visualization"}
+                            ],
+                            "hints": [
+                                "Use subplot grid",
+                                "Maintain consistent styling",
+                                "Handle different data types"
+                            ]
+                        },
+                        {
+                            "title": "Statistical Plots",
+                            "description": "Create statistical visualizations like histograms and box plots.",
+                            "difficulty": "medium",
+                            "starter_code": "import matplotlib.pyplot as plt\n\ndef statistical_plots(data):\n    # Create statistical visualizations\n    pass",
+                            "test_cases": [
+                                {"input": "Distribution data", "expected": "histogram"},
+                                {"input": "Grouped data", "expected": "box plot"}
+                            ],
+                            "hints": [
+                                "Use appropriate bin sizes",
+                                "Add statistical annotations",
+                                "Format axes properly"
+                            ]
                         }
                     ]
                 }
@@ -456,22 +825,210 @@
                             "options": ["Learning without labels", "Learning with labeled data", "Learning by observation"],
                             "correct": "Learning with labeled data",
                             "difficulty": "medium"
+                        },
+                        {
+                            "question": "Which is NOT a type of supervised learning?",
+                            "options": ["Classification", "Clustering", "Regression"],
+                            "correct": "Clustering",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is overfitting?",
+                            "options": ["Model performs well on training data but poorly on new data", "Model performs poorly on all data", "Model learns too slowly"],
+                            "correct": "Model performs well on training data but poorly on new data",
+                            "difficulty": "hard"
                         }
                     ],
                     "coding_exercises": [
                         {
-                            "title": "Simple Linear Regression",
-                            "description": "Implement a basic linear regression model from scratch using numpy. The model should fit a line to 2D data points.",
+                            "title": "Linear Regression Implementation",
+                            "description": "Implement simple linear regression from scratch.",
                             "difficulty": "hard",
-                            "starter_code": "import numpy as np\n\ndef linear_regression(X, y):\n    \"\"\"Implement simple linear regression using numpy.\n    Args:\n        X (np.array): Input features (n_samples,)\n        y (np.array): Target values (n_samples,)\n    Returns:\n        tuple: (slope, intercept)\n    \"\"\"\n    # Your code here\n    pass\n\n# Test the function\nX = np.array([1, 2, 3, 4, 5])\ny = np.array([2.1, 3.8, 6.2, 7.9, 9.3])\nslope, intercept = linear_regression(X, y)\nprint(f\"Slope: {slope:.2f}, Intercept: {intercept:.2f}\")",
+                            "starter_code": "import numpy as np\n\ndef linear_regression(X, y):\n    # Implement linear regression\n    pass",
                             "test_cases": [
-                                {"input": "X = np.array([1, 2, 3]), y = np.array([2, 4, 6])", "expected": {"slope": 2.0, "intercept": 0.0}},
-                                {"input": "X = np.array([0, 1, 2]), y = np.array([1, 2, 3])", "expected": {"slope": 1.0, "intercept": 1.0}}
+                                {"input": "Simple dataset", "expected": "correct coefficients"},
+                                {"input": "Multiple features", "expected": "correct coefficients"}
                             ],
                             "hints": [
-                                "Use np.mean() to calculate averages",
-                                "The slope formula is: sum((x - x_mean) * (y - y_mean)) / sum((x - x_mean)^2)",
-                                "The intercept formula is: y_mean - slope * x_mean"
+                                "Use numpy for matrix operations",
+                                "Implement gradient descent",
+                                "Calculate cost function"
+                            ]
+                        },
+                        {
+                            "title": "Classification Model",
+                            "description": "Build a basic binary classification model.",
+                            "difficulty": "hard",
+                            "starter_code": "def classify(features):\n    # Implement classification\n    pass",
+                            "test_cases": [
+                                {"input": "Binary features", "expected": "correct class"},
+                                {"input": "Edge case", "expected": "correct class"}
+                            ],
+                            "hints": [
+                                "Use decision boundary",
+                                "Implement prediction logic",
+                                "Handle edge cases"
+                            ]
+                        },
+                        {
+                            "title": "Model Evaluation",
+                            "description": "Implement functions to evaluate model performance.",
+                            "difficulty": "medium",
+                            "starter_code": "def evaluate_model(y_true, y_pred):\n    # Calculate accuracy, precision, recall\n    pass",
+                            "test_cases": [
+                                {"input": "Perfect predictions", "expected": "1.0"},
+                                {"input": "Mixed predictions", "expected": "correct metrics"}
+                            ],
+                            "hints": [
+                                "Calculate confusion matrix",
+                                "Implement multiple metrics",
+                                "Handle edge cases"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Unsupervised Learning",
+                    "url": "https://www.youtube.com/watch?v=IUn8k5zSI6g",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about clustering and dimensionality reduction techniques.",
+                    "quizzes": [
+                        {
+                            "question": "What is K-means clustering?",
+                            "options": ["A supervised algorithm", "An unsupervised clustering algorithm", "A regression method"],
+                            "correct": "An unsupervised clustering algorithm",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the purpose of PCA?",
+                            "options": ["Data classification", "Dimensionality reduction", "Data cleaning"],
+                            "correct": "Dimensionality reduction",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is the elbow method used for?",
+                            "options": ["Finding optimal k in k-means", "Data preprocessing", "Feature selection"],
+                            "correct": "Finding optimal k in k-means",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "K-means Implementation",
+                            "description": "Implement K-means clustering algorithm from scratch.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\ndef kmeans(data, k):\n    # Implement k-means clustering\n    pass",
+                            "test_cases": [
+                                {"input": "2D data, k=3", "expected": "correct clusters"},
+                                {"input": "3D data, k=2", "expected": "correct clusters"}
+                            ],
+                            "hints": [
+                                "Initialize centroids randomly",
+                                "Implement assignment step",
+                                "Update centroids"
+                            ]
+                        },
+                        {
+                            "title": "PCA Implementation",
+                            "description": "Implement Principal Component Analysis.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\ndef pca(data, n_components):\n    # Implement PCA\n    pass",
+                            "test_cases": [
+                                {"input": "High-dim data", "expected": "reduced dimensions"},
+                                {"input": "2D to 1D", "expected": "correct projection"}
+                            ],
+                            "hints": [
+                                "Standardize the data",
+                                "Calculate covariance matrix",
+                                "Find eigenvectors"
+                            ]
+                        },
+                        {
+                            "title": "Clustering Evaluation",
+                            "description": "Implement clustering evaluation metrics.",
+                            "difficulty": "medium",
+                            "starter_code": "def evaluate_clustering(data, labels):\n    # Calculate silhouette score and other metrics\n    pass",
+                            "test_cases": [
+                                {"input": "Well-separated clusters", "expected": "high score"},
+                                {"input": "Overlapping clusters", "expected": "low score"}
+                            ],
+                            "hints": [
+                                "Calculate intra-cluster distance",
+                                "Calculate inter-cluster distance",
+                                "Implement silhouette score"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Neural Networks Fundamentals",
+                    "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+                    "difficulty": "hard",
+                    "intro_text": "Learn the basics of neural networks and deep learning.",
+                    "quizzes": [
+                        {
+                            "question": "What is an activation function?",
+                            "options": ["A way to initialize weights", "A non-linear transformation", "A loss function"],
+                            "correct": "A non-linear transformation",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is backpropagation?",
+                            "options": ["Forward pass calculation", "Weight initialization", "Gradient calculation and update"],
+                            "correct": "Gradient calculation and update",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is the purpose of dropout?",
+                            "options": ["Speed up training", "Prevent overfitting", "Increase model size"],
+                            "correct": "Prevent overfitting",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Neural Network Implementation",
+                            "description": "Implement a simple neural network from scratch.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\nclass NeuralNetwork:\n    def __init__(self, layers):\n        # Initialize network\n        pass\n        \n    def forward(self, X):\n        # Implement forward pass\n        pass\n        \n    def backward(self, X, y):\n        # Implement backpropagation\n        pass",
+                            "test_cases": [
+                                {"input": "XOR problem", "expected": "correct predictions"},
+                                {"input": "Binary classification", "expected": "correct predictions"}
+                            ],
+                            "hints": [
+                                "Initialize weights properly",
+                                "Implement activation functions",
+                                "Calculate gradients correctly"
+                            ]
+                        },
+                        {
+                            "title": "Activation Functions",
+                            "description": "Implement common activation functions and their derivatives.",
+                            "difficulty": "medium",
+                            "starter_code": "import numpy as np\n\ndef relu(x):\n    # Implement ReLU\n    pass\n\ndef sigmoid(x):\n    # Implement sigmoid\n    pass\n\ndef tanh(x):\n    # Implement tanh\n    pass",
+                            "test_cases": [
+                                {"input": "Positive values", "expected": "correct activation"},
+                                {"input": "Negative values", "expected": "correct activation"}
+                            ],
+                            "hints": [
+                                "Handle numerical stability",
+                                "Implement derivatives",
+                                "Test edge cases"
+                            ]
+                        },
+                        {
+                            "title": "Loss Functions",
+                            "description": "Implement common loss functions and their gradients.",
+                            "difficulty": "hard",
+                            "starter_code": "import numpy as np\n\ndef mse_loss(y_true, y_pred):\n    # Implement MSE loss\n    pass\n\ndef cross_entropy_loss(y_true, y_pred):\n    # Implement cross entropy loss\n    pass",
+                            "test_cases": [
+                                {"input": "Binary classification", "expected": "correct loss"},
+                                {"input": "Multi-class", "expected": "correct loss"}
+                            ],
+                            "hints": [
+                                "Handle numerical stability",
+                                "Implement gradients",
+                                "Add epsilon to avoid division by zero"
                             ]
                         }
                     ]
@@ -497,6 +1054,18 @@
                             "options": ["A function", "An object representing future completion", "A variable type"],
                             "correct": "An object representing future completion",
                             "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is the purpose of async/await?",
+                            "options": ["Make code run faster", "Write asynchronous code that looks synchronous", "Create new threads"],
+                            "correct": "Write asynchronous code that looks synchronous",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the difference between .then() and await?",
+                            "options": ["No difference", "await can only be used in async functions", "then() is faster"],
+                            "correct": "await can only be used in async functions",
+                            "difficulty": "hard"
                         }
                     ],
                     "coding_exercises": [
@@ -509,7 +1078,187 @@
                                 {"input": "Check async/await usage", "expected": true},
                                 {"input": "Check error handling", "expected": true}
                             ],
-                            "hints": ["Use try/catch for error handling", "Remember to await fetch calls"]
+                            "hints": [
+                                "Use try/catch for error handling",
+                                "Remember to await fetch calls",
+                                "Handle network errors"
+                            ]
+                        },
+                        {
+                            "title": "Promise Chain",
+                            "description": "Create a chain of promises that process data sequentially.",
+                            "difficulty": "hard",
+                            "starter_code": "function processDataSequentially(data) {\n    // Implement promise chain\n}",
+                            "test_cases": [
+                                {"input": "Sequential data", "expected": "processed result"},
+                                {"input": "Error case", "expected": "error handled"}
+                            ],
+                            "hints": [
+                                "Use .then() chaining",
+                                "Include error handling",
+                                "Maintain data flow"
+                            ]
+                        },
+                        {
+                            "title": "Race Condition Handler",
+                            "description": "Implement a solution to handle potential race conditions in async code.",
+                            "difficulty": "hard",
+                            "starter_code": "function handleRaceCondition() {\n    // Implement race condition solution\n}",
+                            "test_cases": [
+                                {"input": "Multiple async calls", "expected": "correct order"},
+                                {"input": "Concurrent requests", "expected": "handled properly"}
+                            ],
+                            "hints": [
+                                "Use Promise.race or Promise.all",
+                                "Consider request cancellation",
+                                "Track request state"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Closures and Scope",
+                    "url": "https://www.youtube.com/watch?v=3a0I8ICR1Vg",
+                    "difficulty": "hard",
+                    "intro_text": "Understand closures, scope, and the module pattern in JavaScript.",
+                    "quizzes": [
+                        {
+                            "question": "What is a closure?",
+                            "options": ["A function with access to outer scope", "A way to close functions", "A type of loop"],
+                            "correct": "A function with access to outer scope",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is lexical scope?",
+                            "options": ["Variable accessibility based on location", "Global scope", "Function scope"],
+                            "correct": "Variable accessibility based on location",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the module pattern?",
+                            "options": ["A way to organize code", "A type of closure for data privacy", "A loop pattern"],
+                            "correct": "A type of closure for data privacy",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Counter Closure",
+                            "description": "Implement a counter using closure to maintain private state.",
+                            "difficulty": "medium",
+                            "starter_code": "function createCounter() {\n    // Implement counter with closure\n}",
+                            "test_cases": [
+                                {"input": "Increment calls", "expected": "correct count"},
+                                {"input": "Multiple counters", "expected": "independent state"}
+                            ],
+                            "hints": [
+                                "Use closure for private state",
+                                "Return object with methods",
+                                "Maintain encapsulation"
+                            ]
+                        },
+                        {
+                            "title": "Module Pattern",
+                            "description": "Create a module with private and public methods.",
+                            "difficulty": "hard",
+                            "starter_code": "const myModule = (function() {\n    // Implement module pattern\n})();",
+                            "test_cases": [
+                                {"input": "Public method call", "expected": "correct result"},
+                                {"input": "Private data access", "expected": "encapsulated"}
+                            ],
+                            "hints": [
+                                "Use IIFE pattern",
+                                "Expose public API",
+                                "Keep private data hidden"
+                            ]
+                        },
+                        {
+                            "title": "Memoization",
+                            "description": "Implement a memoization function using closure.",
+                            "difficulty": "hard",
+                            "starter_code": "function memoize(fn) {\n    // Implement memoization\n}",
+                            "test_cases": [
+                                {"input": "Repeated calls", "expected": "cached result"},
+                                {"input": "Different args", "expected": "new calculation"}
+                            ],
+                            "hints": [
+                                "Use closure for cache",
+                                "Handle multiple arguments",
+                                "Consider cache key strategy"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Prototypes and Classes",
+                    "url": "https://www.youtube.com/watch?v=4jb4AYEyhRc",
+                    "difficulty": "hard",
+                    "intro_text": "Master object-oriented programming in JavaScript.",
+                    "quizzes": [
+                        {
+                            "question": "What is prototype inheritance?",
+                            "options": ["Classical inheritance", "Objects inheriting from objects", "Multiple inheritance"],
+                            "correct": "Objects inheriting from objects",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is the 'this' keyword?",
+                            "options": ["Global object", "Current function", "Execution context reference"],
+                            "correct": "Execution context reference",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What are ES6 classes?",
+                            "options": ["New type of objects", "Syntactic sugar over prototypes", "Replacement for prototypes"],
+                            "correct": "Syntactic sugar over prototypes",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Class Inheritance",
+                            "description": "Implement class inheritance with proper method overriding.",
+                            "difficulty": "hard",
+                            "starter_code": "class Animal {\n    // Implement base class\n}\n\nclass Dog extends Animal {\n    // Implement derived class\n}",
+                            "test_cases": [
+                                {"input": "Method override", "expected": "correct behavior"},
+                                {"input": "Super call", "expected": "proper inheritance"}
+                            ],
+                            "hints": [
+                                "Use super() in constructor",
+                                "Override methods properly",
+                                "Maintain prototype chain"
+                            ]
+                        },
+                        {
+                            "title": "Mixins Implementation",
+                            "description": "Create a mixin pattern for sharing behavior.",
+                            "difficulty": "hard",
+                            "starter_code": "const mixinFactory = (superclass) => class extends superclass {\n    // Implement mixin\n};",
+                            "test_cases": [
+                                {"input": "Mixed in method", "expected": "accessible"},
+                                {"input": "Multiple mixins", "expected": "working"}
+                            ],
+                            "hints": [
+                                "Use composition over inheritance",
+                                "Handle method conflicts",
+                                "Maintain proper this binding"
+                            ]
+                        },
+                        {
+                            "title": "Custom Array Subclass",
+                            "description": "Create a custom array subclass with additional methods.",
+                            "difficulty": "hard",
+                            "starter_code": "class CustomArray extends Array {\n    // Implement custom array methods\n}",
+                            "test_cases": [
+                                {"input": "Custom method", "expected": "correct result"},
+                                {"input": "Inherited method", "expected": "working"}
+                            ],
+                            "hints": [
+                                "Extend built-in methods",
+                                "Handle array-like behavior",
+                                "Maintain array functionality"
+                            ]
                         }
                     ]
                 }
@@ -534,6 +1283,18 @@
                             "options": ["A database", "A mobile framework", "A programming language"],
                             "correct": "A mobile framework",
                             "difficulty": "medium"
+                        },
+                        {
+                            "question": "How does React Native differ from React?",
+                            "options": ["Uses native components", "Only for web", "No difference"],
+                            "correct": "Uses native components",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is the entry point of a React Native app?",
+                            "options": ["index.js", "App.js", "main.js"],
+                            "correct": "App.js",
+                            "difficulty": "easy"
                         }
                     ],
                     "coding_exercises": [
@@ -541,12 +1302,201 @@
                             "title": "Create a Simple Screen",
                             "description": "Build a basic mobile screen with React Native components.",
                             "difficulty": "medium",
-                            "starter_code": "import React from 'react';\nimport { View, Text } from 'react-native';\n\nexport default function MyScreen() {\n    // Implement screen\n}",
+                            "starter_code": "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function MyScreen() {\n    // Implement screen\n}",
                             "test_cases": [
                                 {"input": "Check View usage", "expected": true},
-                                {"input": "Check Text usage", "expected": true}
+                                {"input": "Check Text usage", "expected": true},
+                                {"input": "Check styles", "expected": true}
                             ],
-                            "hints": ["Use View for containers", "Style with StyleSheet"]
+                            "hints": [
+                                "Use View for containers",
+                                "Style with StyleSheet",
+                                "Follow mobile design patterns"
+                            ]
+                        },
+                        {
+                            "title": "Implement Navigation",
+                            "description": "Create a basic navigation system between screens.",
+                            "difficulty": "medium",
+                            "starter_code": "import { NavigationContainer } from '@react-navigation/native';\nimport { createStackNavigator } from '@react-navigation/stack';\n\nexport default function App() {\n    // Implement navigation\n}",
+                            "test_cases": [
+                                {"input": "Navigation setup", "expected": true},
+                                {"input": "Screen transition", "expected": true},
+                                {"input": "Navigation params", "expected": true}
+                            ],
+                            "hints": [
+                                "Use React Navigation",
+                                "Set up stack navigator",
+                                "Handle screen params"
+                            ]
+                        },
+                        {
+                            "title": "Create Custom Component",
+                            "description": "Build a reusable custom component with props and state.",
+                            "difficulty": "hard",
+                            "starter_code": "import React, { useState } from 'react';\nimport { View, TouchableOpacity } from 'react-native';\n\nexport default function CustomComponent() {\n    // Implement component\n}",
+                            "test_cases": [
+                                {"input": "Props handling", "expected": true},
+                                {"input": "State management", "expected": true},
+                                {"input": "Event handling", "expected": true}
+                            ],
+                            "hints": [
+                                "Use useState hook",
+                                "Implement prop validation",
+                                "Handle user interactions"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "State Management",
+                    "url": "https://www.youtube.com/watch?v=0-S5a0eXPoc",
+                    "difficulty": "hard",
+                    "intro_text": "Learn state management in React Native using Redux and Context API.",
+                    "quizzes": [
+                        {
+                            "question": "What is Redux?",
+                            "options": ["Database", "State management library", "UI framework"],
+                            "correct": "State management library",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is Context API used for?",
+                            "options": ["API calls", "Prop drilling prevention", "Database access"],
+                            "correct": "Prop drilling prevention",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is a reducer in Redux?",
+                            "options": ["Pure function", "Component", "Database query"],
+                            "correct": "Pure function",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Redux Store Setup",
+                            "description": "Set up a Redux store with actions and reducers.",
+                            "difficulty": "hard",
+                            "starter_code": "import { createStore } from 'redux';\n\n// Implement Redux store setup\n",
+                            "test_cases": [
+                                {"input": "Store creation", "expected": true},
+                                {"input": "Action dispatch", "expected": true},
+                                {"input": "State update", "expected": true}
+                            ],
+                            "hints": [
+                                "Define action types",
+                                "Create action creators",
+                                "Implement reducers"
+                            ]
+                        },
+                        {
+                            "title": "Context Provider",
+                            "description": "Create a context provider for theme management.",
+                            "difficulty": "medium",
+                            "starter_code": "import React, { createContext, useState } from 'react';\n\n// Implement theme context\n",
+                            "test_cases": [
+                                {"input": "Context creation", "expected": true},
+                                {"input": "Theme switching", "expected": true},
+                                {"input": "Consumer usage", "expected": true}
+                            ],
+                            "hints": [
+                                "Create context object",
+                                "Implement provider component",
+                                "Add theme switching logic"
+                            ]
+                        },
+                        {
+                            "title": "Redux Middleware",
+                            "description": "Implement custom middleware for async actions.",
+                            "difficulty": "hard",
+                            "starter_code": "// Implement custom middleware\nconst asyncMiddleware = store => next => action => {\n\n};",
+                            "test_cases": [
+                                {"input": "Async action", "expected": true},
+                                {"input": "Error handling", "expected": true},
+                                {"input": "State update", "expected": true}
+                            ],
+                            "hints": [
+                                "Handle async operations",
+                                "Implement error handling",
+                                "Update store state"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Native Device Features",
+                    "url": "https://www.youtube.com/watch?v=0-S5a0eXPoc",
+                    "difficulty": "hard",
+                    "intro_text": "Learn to access and use native device features in React Native.",
+                    "quizzes": [
+                        {
+                            "question": "What is a bridge in React Native?",
+                            "options": ["UI component", "JS-Native communication", "Database connection"],
+                            "correct": "JS-Native communication",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "How to access camera in React Native?",
+                            "options": ["Built-in API", "Third-party library", "Not possible"],
+                            "correct": "Third-party library",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What are permissions in React Native?",
+                            "options": ["User access rights", "App settings", "Database permissions"],
+                            "correct": "User access rights",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Camera Integration",
+                            "description": "Implement camera functionality in React Native.",
+                            "difficulty": "hard",
+                            "starter_code": "import { Camera } from 'expo-camera';\n\n// Implement camera functionality\n",
+                            "test_cases": [
+                                {"input": "Permission check", "expected": true},
+                                {"input": "Camera preview", "expected": true},
+                                {"input": "Photo capture", "expected": true}
+                            ],
+                            "hints": [
+                                "Request permissions",
+                                "Set up camera preview",
+                                "Handle photo capture"
+                            ]
+                        },
+                        {
+                            "title": "Location Services",
+                            "description": "Implement location tracking and geofencing.",
+                            "difficulty": "hard",
+                            "starter_code": "import * as Location from 'expo-location';\n\n// Implement location services\n",
+                            "test_cases": [
+                                {"input": "Location permission", "expected": true},
+                                {"input": "Current location", "expected": true},
+                                {"input": "Location updates", "expected": true}
+                            ],
+                            "hints": [
+                                "Handle permissions",
+                                "Get current location",
+                                "Set up location tracking"
+                            ]
+                        },
+                        {
+                            "title": "Local Storage",
+                            "description": "Implement data persistence using AsyncStorage.",
+                            "difficulty": "medium",
+                            "starter_code": "import AsyncStorage from '@react-native-async-storage/async-storage';\n\n// Implement storage functions\n",
+                            "test_cases": [
+                                {"input": "Data storage", "expected": true},
+                                {"input": "Data retrieval", "expected": true},
+                                {"input": "Error handling", "expected": true}
+                            ],
+                            "hints": [
+                                "Handle async operations",
+                                "Implement error handling",
+                                "Structure stored data"
+                            ]
                         }
                     ]
                 }
@@ -571,19 +1521,220 @@
                             "options": ["A unique identifier", "A foreign key", "A table name"],
                             "correct": "A unique identifier",
                             "difficulty": "medium"
+                        },
+                        {
+                            "question": "Which SQL command is used to retrieve data?",
+                            "options": ["GET", "FETCH", "SELECT"],
+                            "correct": "SELECT",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the purpose of JOIN in SQL?",
+                            "options": ["Combine rows from tables", "Add new columns", "Sort data"],
+                            "correct": "Combine rows from tables",
+                            "difficulty": "medium"
                         }
                     ],
                     "coding_exercises": [
                         {
-                            "title": "Write SQL Queries",
-                            "description": "Create SQL queries for common database operations.",
+                            "title": "Basic SQL Queries",
+                            "description": "Write SQL queries for common database operations.",
                             "difficulty": "medium",
-                            "starter_code": "-- Write your SQL queries here\n",
+                            "starter_code": "-- Write queries for:\n-- 1. Select all columns from users\n-- 2. Filter by condition\n-- 3. Sort results\n",
                             "test_cases": [
-                                {"input": "SELECT query", "expected": true},
-                                {"input": "JOIN usage", "expected": true}
+                                {"input": "SELECT query", "expected": "correct syntax"},
+                                {"input": "WHERE clause", "expected": "correct syntax"},
+                                {"input": "ORDER BY", "expected": "correct syntax"}
                             ],
-                            "hints": ["Use SELECT for querying", "Remember JOIN syntax"]
+                            "hints": [
+                                "Use SELECT for querying",
+                                "Add WHERE for filtering",
+                                "Include ORDER BY for sorting"
+                            ]
+                        },
+                        {
+                            "title": "JOIN Operations",
+                            "description": "Write queries using different types of JOINs.",
+                            "difficulty": "hard",
+                            "starter_code": "-- Write queries using:\n-- 1. INNER JOIN\n-- 2. LEFT JOIN\n-- 3. Multiple joins\n",
+                            "test_cases": [
+                                {"input": "INNER JOIN", "expected": "correct syntax"},
+                                {"input": "LEFT JOIN", "expected": "correct syntax"},
+                                {"input": "Multiple joins", "expected": "correct syntax"}
+                            ],
+                            "hints": [
+                                "Match correct columns",
+                                "Consider join order",
+                                "Handle NULL values"
+                            ]
+                        },
+                        {
+                            "title": "Aggregation Functions",
+                            "description": "Use SQL aggregation functions with GROUP BY.",
+                            "difficulty": "medium",
+                            "starter_code": "-- Write queries using:\n-- 1. COUNT, SUM, AVG\n-- 2. GROUP BY\n-- 3. HAVING\n",
+                            "test_cases": [
+                                {"input": "Aggregation", "expected": "correct syntax"},
+                                {"input": "GROUP BY", "expected": "correct syntax"},
+                                {"input": "HAVING", "expected": "correct syntax"}
+                            ],
+                            "hints": [
+                                "Choose appropriate function",
+                                "Group related data",
+                                "Filter groups with HAVING"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Database Design Principles",
+                    "url": "https://www.youtube.com/watch?v=ztHopE5Wnpc",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about database normalization and design principles.",
+                    "quizzes": [
+                        {
+                            "question": "What is normalization?",
+                            "options": ["Data encryption", "Organizing data efficiently", "Data backup"],
+                            "correct": "Organizing data efficiently",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is Third Normal Form (3NF)?",
+                            "options": ["No duplicate data", "No transitive dependencies", "No composite keys"],
+                            "correct": "No transitive dependencies",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is a foreign key constraint?",
+                            "options": ["Primary key reference", "Unique column", "Not null column"],
+                            "correct": "Primary key reference",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Create Database Schema",
+                            "description": "Design and create a normalized database schema.",
+                            "difficulty": "hard",
+                            "starter_code": "-- Create tables for an e-commerce system:\n-- 1. Users\n-- 2. Products\n-- 3. Orders\n",
+                            "test_cases": [
+                                {"input": "Table creation", "expected": "valid schema"},
+                                {"input": "Constraints", "expected": "proper constraints"},
+                                {"input": "Relationships", "expected": "correct relations"}
+                            ],
+                            "hints": [
+                                "Follow normalization rules",
+                                "Add proper constraints",
+                                "Define relationships"
+                            ]
+                        },
+                        {
+                            "title": "Implement Constraints",
+                            "description": "Add various constraints to database tables.",
+                            "difficulty": "medium",
+                            "starter_code": "-- Add constraints:\n-- 1. Primary Key\n-- 2. Foreign Key\n-- 3. Check Constraints\n",
+                            "test_cases": [
+                                {"input": "Primary key", "expected": "valid constraint"},
+                                {"input": "Foreign key", "expected": "valid constraint"},
+                                {"input": "Check constraint", "expected": "valid constraint"}
+                            ],
+                            "hints": [
+                                "Use appropriate constraint types",
+                                "Consider referential integrity",
+                                "Add meaningful constraints"
+                            ]
+                        },
+                        {
+                            "title": "Database Views",
+                            "description": "Create and manage database views.",
+                            "difficulty": "medium",
+                            "starter_code": "-- Create views for:\n-- 1. Simplified data access\n-- 2. Data security\n-- 3. Complex queries\n",
+                            "test_cases": [
+                                {"input": "View creation", "expected": "valid view"},
+                                {"input": "View permissions", "expected": "correct permissions"},
+                                {"input": "View usage", "expected": "proper usage"}
+                            ],
+                            "hints": [
+                                "Choose appropriate columns",
+                                "Consider performance",
+                                "Implement security"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Database Performance",
+                    "url": "https://www.youtube.com/watch?v=FNZwT5_zX_M",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about database optimization and performance tuning.",
+                    "quizzes": [
+                        {
+                            "question": "What is an index in databases?",
+                            "options": ["Data structure for fast retrieval", "Table backup", "Data type"],
+                            "correct": "Data structure for fast retrieval",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is query optimization?",
+                            "options": ["Making queries faster", "Writing shorter queries", "Using more memory"],
+                            "correct": "Making queries faster",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is database partitioning?",
+                            "options": ["Splitting tables", "Merging tables", "Copying tables"],
+                            "correct": "Splitting tables",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Create Indexes",
+                            "description": "Design and implement database indexes.",
+                            "difficulty": "hard",
+                            "starter_code": "-- Create indexes for:\n-- 1. Single column\n-- 2. Composite index\n-- 3. Unique index\n",
+                            "test_cases": [
+                                {"input": "Single column index", "expected": "valid index"},
+                                {"input": "Composite index", "expected": "valid index"},
+                                {"input": "Unique index", "expected": "valid index"}
+                            ],
+                            "hints": [
+                                "Choose appropriate columns",
+                                "Consider query patterns",
+                                "Balance performance impact"
+                            ]
+                        },
+                        {
+                            "title": "Query Optimization",
+                            "description": "Optimize slow-running queries.",
+                            "difficulty": "hard",
+                            "starter_code": "-- Optimize these queries:\n-- 1. Complex JOIN\n-- 2. Subquery\n-- 3. Aggregation\n",
+                            "test_cases": [
+                                {"input": "Original query", "expected": "improved performance"},
+                                {"input": "Execution plan", "expected": "optimized plan"},
+                                {"input": "Resource usage", "expected": "reduced resources"}
+                            ],
+                            "hints": [
+                                "Analyze execution plan",
+                                "Use appropriate indexes",
+                                "Simplify complex operations"
+                            ]
+                        },
+                        {
+                            "title": "Database Maintenance",
+                            "description": "Implement database maintenance procedures.",
+                            "difficulty": "medium",
+                            "starter_code": "-- Create procedures for:\n-- 1. Statistics update\n-- 2. Index maintenance\n-- 3. Data archiving\n",
+                            "test_cases": [
+                                {"input": "Statistics update", "expected": "successful update"},
+                                {"input": "Index maintenance", "expected": "optimized indexes"},
+                                {"input": "Archiving", "expected": "proper archival"}
+                            ],
+                            "hints": [
+                                "Schedule regular maintenance",
+                                "Monitor performance impact",
+                                "Implement error handling"
+                            ]
                         }
                     ]
                 }
@@ -608,19 +1759,198 @@
                             "options": ["Infrastructure as a Service", "Internet as a Service", "Integration as a Service"],
                             "correct": "Infrastructure as a Service",
                             "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is the main benefit of cloud computing?",
+                            "options": ["Lower costs", "Better security", "Faster internet"],
+                            "correct": "Lower costs",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "Which is NOT a cloud deployment model?",
+                            "options": ["Public cloud", "Private cloud", "Local cloud"],
+                            "correct": "Local cloud",
+                            "difficulty": "medium"
                         }
                     ],
                     "coding_exercises": [
                         {
-                            "title": "Deploy to Cloud",
-                            "description": "Deploy a simple application to a cloud platform.",
+                            "title": "Cloud Provider Setup",
+                            "description": "Set up basic cloud infrastructure using AWS CLI.",
                             "difficulty": "medium",
-                            "starter_code": "# Cloud deployment configuration\n",
+                            "starter_code": "# AWS CLI commands for:\n# 1. Create VPC\n# 2. Launch EC2 instance\n# 3. Configure security group\n",
                             "test_cases": [
-                                {"input": "Check configuration", "expected": true},
-                                {"input": "Check deployment", "expected": true}
+                                {"input": "VPC creation", "expected": "successful"},
+                                {"input": "EC2 launch", "expected": "running"},
+                                {"input": "Security group", "expected": "configured"}
                             ],
-                            "hints": ["Follow cloud provider guidelines", "Check security settings"]
+                            "hints": [
+                                "Use AWS CLI commands",
+                                "Follow security best practices",
+                                "Check resource status"
+                            ]
+                        },
+                        {
+                            "title": "Cloud Storage Integration",
+                            "description": "Implement cloud storage operations using AWS S3.",
+                            "difficulty": "medium",
+                            "starter_code": "import boto3\n\ndef s3_operations():\n    # Implement S3 operations\n    pass",
+                            "test_cases": [
+                                {"input": "Upload file", "expected": "successful"},
+                                {"input": "Download file", "expected": "successful"},
+                                {"input": "List buckets", "expected": "successful"}
+                            ],
+                            "hints": [
+                                "Initialize S3 client",
+                                "Handle exceptions",
+                                "Use appropriate permissions"
+                            ]
+                        },
+                        {
+                            "title": "Resource Monitoring",
+                            "description": "Set up basic monitoring for cloud resources.",
+                            "difficulty": "medium",
+                            "starter_code": "# CloudWatch setup for:\n# 1. CPU utilization\n# 2. Memory usage\n# 3. Network traffic\n",
+                            "test_cases": [
+                                {"input": "Metric creation", "expected": "active"},
+                                {"input": "Alarm setup", "expected": "configured"},
+                                {"input": "Dashboard", "expected": "visible"}
+                            ],
+                            "hints": [
+                                "Define appropriate metrics",
+                                "Set meaningful thresholds",
+                                "Configure notifications"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Containerization and Orchestration",
+                    "url": "https://www.youtube.com/watch?v=fqMOX6JJhGo",
+                    "difficulty": "medium",
+                    "intro_text": "Learn about Docker containers and Kubernetes orchestration.",
+                    "quizzes": [
+                        {
+                            "question": "What is a container?",
+                            "options": ["Virtual machine", "Isolated environment", "Physical server"],
+                            "correct": "Isolated environment",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is Kubernetes?",
+                            "options": ["Container runtime", "Container orchestrator", "Container image"],
+                            "correct": "Container orchestrator",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is a Docker image?",
+                            "options": ["Running container", "Container template", "Container network"],
+                            "correct": "Container template",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Dockerfile Creation",
+                            "description": "Create a Dockerfile for a web application.",
+                            "difficulty": "medium",
+                            "starter_code": "# Create Dockerfile with:\n# 1. Base image\n# 2. Dependencies\n# 3. Application code\n",
+                            "test_cases": [
+                                {"input": "Image build", "expected": "successful"},
+                                {"input": "Container run", "expected": "running"},
+                                {"input": "App access", "expected": "accessible"}
+                            ],
+                            "hints": [
+                                "Choose appropriate base image",
+                                "Optimize layer caching",
+                                "Follow best practices"
+                            ]
+                        },
+                        {
+                            "title": "Kubernetes Deployment",
+                            "description": "Create Kubernetes deployment configuration.",
+                            "difficulty": "hard",
+                            "starter_code": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app\nspec:\n  # Add deployment configuration\n",
+                            "test_cases": [
+                                {"input": "Deployment creation", "expected": "successful"},
+                                {"input": "Pod status", "expected": "running"},
+                                {"input": "Service access", "expected": "accessible"}
+                            ],
+                            "hints": [
+                                "Define resource limits",
+                                "Configure health checks",
+                                "Set update strategy"
+                            ]
+                        },
+                        {
+                            "title": "Container Networking",
+                            "description": "Set up container networking and service discovery.",
+                            "difficulty": "hard",
+                            "starter_code": "# Configure:\n# 1. Network policy\n# 2. Service definition\n# 3. Ingress rules\n",
+                            "test_cases": [
+                                {"input": "Network policy", "expected": "applied"},
+                                {"input": "Service creation", "expected": "successful"},
+                                {"input": "Ingress rules", "expected": "working"}
+                            ],
+                            "hints": [
+                                "Define network policies",
+                                "Configure service ports",
+                                "Set up load balancing"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Cloud Security",
+                    "url": "https://www.youtube.com/watch?v=ZM6NAjZU32I",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about cloud security best practices and implementation.",
+                    "quizzes": [
+                        {
+                            "question": "What is IAM?",
+                            "options": ["Identity and Access Management", "Internet Access Module", "Internal Asset Management"],
+                            "correct": "Identity and Access Management",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is encryption at rest?",
+                            "options": ["Data encryption in storage", "Data encryption in transit", "No encryption"],
+                            "correct": "Data encryption in storage",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is a security group?",
+                            "options": ["Virtual firewall", "User group", "Storage group"],
+                            "correct": "Virtual firewall",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "IAM Policy Creation",
+                            "description": "Create and manage IAM policies and roles.",
+                            "difficulty": "hard",
+                            "starter_code": "# Create IAM policies for:\n# 1. User permissions\n# 2. Role assumptions\n# 3. Resource access\n",
+                            "test_cases": [
+                                {"input": "Policy creation", "expected": "valid"},
+                                {"input": "Role assignment", "expected": "successful"},
+                                {"input": "Access test", "expected": "working"}
+                            ],
+                            "hints": [
+                                "Follow least privilege principle",
+                                "Use policy conditions",
+                                "Test access thoroughly"
+                            ]
+                        },
+                        {
+                            "title": "Security Configuration",
+                            "description": "Implement security configurations for cloud resources.",
+                            "difficulty": "hard",
+                            "starter_code": "# Configure:\n# 1. Security groups\n# 2. Network ACLs\n# 3. SSL/TLS setup\n",
+                            "test_cases": [
+                                "Use cryptographic functions",
+                                "Include timestamp for expiration"
+                            ]
                         }
                     ]
                 }
@@ -645,6 +1975,18 @@
                             "options": ["Data compression", "Data transformation", "Data deletion"],
                             "correct": "Data transformation",
                             "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is a common authentication method?",
+                            "options": ["Two-factor authentication", "Single password", "No password"],
+                            "correct": "Two-factor authentication",
+                            "difficulty": "easy"
+                        },
+                        {
+                            "question": "What is a firewall?",
+                            "options": ["Antivirus software", "Network security system", "Password manager"],
+                            "correct": "Network security system",
+                            "difficulty": "medium"
                         }
                     ],
                     "coding_exercises": [
@@ -652,12 +1994,201 @@
                             "title": "Implement Encryption",
                             "description": "Create a simple encryption/decryption program.",
                             "difficulty": "hard",
-                            "starter_code": "def encrypt(text, key):\n    # Implement encryption\n    pass",
+                            "starter_code": "def encrypt(text, key):\n    # Implement encryption\n    pass\n\ndef decrypt(text, key):\n    # Implement decryption\n    pass",
                             "test_cases": [
                                 {"input": "hello", "expected": "encrypted"},
-                                {"input": "encrypted", "expected": "hello"}
+                                {"input": "encrypted", "expected": "hello"},
+                                {"input": "special chars", "expected": "handled"}
                             ],
-                            "hints": ["Use XOR for simple encryption", "Remember to handle edge cases"]
+                            "hints": [
+                                "Use XOR for simple encryption",
+                                "Handle edge cases",
+                                "Validate input data"
+                            ]
+                        },
+                        {
+                            "title": "Password Validator",
+                            "description": "Create a password strength validator.",
+                            "difficulty": "medium",
+                            "starter_code": "def validate_password(password):\n    # Check password strength\n    # Return score and feedback\n    pass",
+                            "test_cases": [
+                                {"input": "weak123", "expected": false},
+                                {"input": "StrongP@ss123", "expected": true},
+                                {"input": "MixedCase123!", "expected": true}
+                            ],
+                            "hints": [
+                                "Check length and complexity",
+                                "Use regex for pattern matching",
+                                "Provide feedback messages"
+                            ]
+                        },
+                        {
+                            "title": "Security Token Generator",
+                            "description": "Implement a secure token generation system.",
+                            "difficulty": "hard",
+                            "starter_code": "import secrets\nimport time\n\ndef generate_token(expiry_minutes=30):\n    # Generate secure token\n    pass\n\ndef verify_token(token):\n    # Verify token\n    pass",
+                            "test_cases": [
+                                {"input": "Generate token", "expected": "valid token"},
+                                {"input": "Verify token", "expected": true},
+                                {"input": "Expired token", "expected": false}
+                            ],
+                            "hints": [
+                                "Use cryptographic functions",
+                                "Include timestamp for expiration",
+                                "Implement token validation"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Network Security",
+                    "url": "https://www.youtube.com/watch?v=E03gh1huvW4",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about network security principles and implementation.",
+                    "quizzes": [
+                        {
+                            "question": "What is a port scan?",
+                            "options": ["Network mapping", "Data encryption", "File transfer"],
+                            "correct": "Network mapping",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is SSL/TLS?",
+                            "options": ["Security protocol", "Programming language", "Operating system"],
+                            "correct": "Security protocol",
+                            "difficulty": "hard"
+                        },
+                        {
+                            "question": "What is a MITM attack?",
+                            "options": ["Man in the Middle", "Multiple Internet Transfers", "Managed IT Method"],
+                            "correct": "Man in the Middle",
+                            "difficulty": "medium"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Port Scanner",
+                            "description": "Create a basic port scanner with proper error handling.",
+                            "difficulty": "hard",
+                            "starter_code": "import socket\n\ndef scan_ports(target, port_range):\n    # Implement port scanning\n    pass",
+                            "test_cases": [
+                                {"input": "Local host", "expected": "open ports"},
+                                {"input": "Invalid host", "expected": "error handled"},
+                                {"input": "Port range", "expected": "scanned"}
+                            ],
+                            "hints": [
+                                "Use socket programming",
+                                "Implement timeout",
+                                "Handle exceptions"
+                            ]
+                        },
+                        {
+                            "title": "SSL Certificate Validator",
+                            "description": "Implement SSL certificate validation.",
+                            "difficulty": "hard",
+                            "starter_code": "import ssl\nimport socket\n\ndef validate_ssl_cert(hostname):\n    # Implement certificate validation\n    pass",
+                            "test_cases": [
+                                {"input": "Valid certificate", "expected": true},
+                                {"input": "Expired certificate", "expected": false},
+                                {"input": "Self-signed", "expected": false}
+                            ],
+                            "hints": [
+                                "Check certificate chain",
+                                "Verify expiration date",
+                                "Validate hostname"
+                            ]
+                        },
+                        {
+                            "title": "Packet Analyzer",
+                            "description": "Create a simple packet analyzer using pcap.",
+                            "difficulty": "hard",
+                            "starter_code": "from scapy.all import *\n\ndef analyze_packets(interface):\n    # Implement packet analysis\n    pass",
+                            "test_cases": [
+                                {"input": "TCP packets", "expected": "analyzed"},
+                                {"input": "UDP packets", "expected": "analyzed"},
+                                {"input": "ICMP packets", "expected": "analyzed"}
+                            ],
+                            "hints": [
+                                "Use appropriate library",
+                                "Filter packets",
+                                "Handle protocols"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Web Security",
+                    "url": "https://www.youtube.com/watch?v=WlmKwIe9z1Q",
+                    "difficulty": "hard",
+                    "intro_text": "Learn about web application security and common vulnerabilities.",
+                    "quizzes": [
+                        {
+                            "question": "What is XSS?",
+                            "options": ["Cross-site Scripting", "Extended Style Sheets", "XML Security System"],
+                            "correct": "Cross-site Scripting",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is SQL injection?",
+                            "options": ["Database attack", "Network protocol", "Authentication method"],
+                            "correct": "Database attack",
+                            "difficulty": "medium"
+                        },
+                        {
+                            "question": "What is CSRF?",
+                            "options": ["Cross-site Request Forgery", "Client Server Response Format", "Cascading Style Reference"],
+                            "correct": "Cross-site Request Forgery",
+                            "difficulty": "hard"
+                        }
+                    ],
+                    "coding_exercises": [
+                        {
+                            "title": "Input Sanitizer",
+                            "description": "Implement input sanitization for web forms.",
+                            "difficulty": "medium",
+                            "starter_code": "def sanitize_input(user_input):\n    # Implement input sanitization\n    pass\n\ndef validate_input(sanitized_input):\n    # Implement input validation\n    pass",
+                            "test_cases": [
+                                {"input": "SQL injection attempt", "expected": "sanitized"},
+                                {"input": "XSS attempt", "expected": "sanitized"},
+                                {"input": "Valid input", "expected": "validated"}
+                            ],
+                            "hints": [
+                                "Use regex patterns",
+                                "Escape special characters",
+                                "Implement whitelist"
+                            ]
+                        },
+                        {
+                            "title": "CSRF Token Generator",
+                            "description": "Implement CSRF token generation and validation.",
+                            "difficulty": "hard",
+                            "starter_code": "import secrets\n\ndef generate_csrf_token():\n    # Generate CSRF token\n    pass\n\ndef validate_csrf_token(token):\n    # Validate CSRF token\n    pass",
+                            "test_cases": [
+                                {"input": "Generate token", "expected": "valid token"},
+                                {"input": "Validate token", "expected": true},
+                                {"input": "Invalid token", "expected": false}
+                            ],
+                            "hints": [
+                                "Use secure random",
+                                "Include timestamp",
+                                "Implement session binding"
+                            ]
+                        },
+                        {
+                            "title": "Security Headers",
+                            "description": "Implement security headers for a web application.",
+                            "difficulty": "medium",
+                            "starter_code": "def set_security_headers(response):\n    # Add security headers\n    pass\n\ndef validate_security_headers(headers):\n    # Validate security headers\n    pass",
+                            "test_cases": [
+                                {"input": "CSP header", "expected": "set"},
+                                {"input": "HSTS header", "expected": "set"},
+                                {"input": "XSS protection", "expected": "enabled"}
+                            ],
+                            "hints": [
+                                "Include essential headers",
+                                "Set appropriate values",
+                                "Follow best practices"
+                            ]
                         }
                     ]
                 }

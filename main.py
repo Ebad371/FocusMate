@@ -1474,7 +1474,8 @@ elif selected == "My Courses":
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('''
-        SELECT c.*, up.progress_percentage, up.overall_score, up.status, up.last_accessed
+        SELECT c.id, c.name, c.category, c.total_chapters, c.total_lectures, c.difficulty_level, c.description,
+               up.progress_percentage, up.overall_score, up.status, up.last_accessed
         FROM courses c
         JOIN user_progress up ON c.id = up.course_id
         WHERE up.user_id = ?
@@ -1485,38 +1486,45 @@ elif selected == "My Courses":
         
         if enrolled_courses:
             for course in enrolled_courses:
-                print(course)
-                course_id, name, category, total_chapters, total_lectures, difficulty, description = course[:7]
-                progress, score, status, last_accessed = course[8:12]
-                
-                with st.container():
-                    st.markdown(f"""
-                    <div class="course-card">
-                        <h3>{name}</h3>
-                        <p>{description}</p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong>Progress:</strong> {str(progress or 0)}% | 
-                                <strong>Score:</strong> {int(score or 0)}% | 
-                                <strong>Status:</strong> {status}
+                try:
+                    course_id = course[0]
+                    name = course[1]
+                    category = course[2]
+                    total_chapters = course[3]
+                    total_lectures = course[4]
+                    difficulty = course[5]
+                    description = course[6]
+                    progress = course[7] or 0
+                    score = course[8] or 0
+                    status = course[9]
+                    last_accessed = course[10]
+                    
+                    with st.container():
+                        st.markdown(f"""
+                        <div class="course-card">
+                            <h3>{name}</h3>
+                            <p>{description}</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>Progress:</strong> {progress:.1f}% | 
+                                    <strong>Score:</strong> {score:.1f}% | 
+                                    <strong>Status:</strong> {status}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    col1, col2, col3 = st.columns([1, 1, 1])
-                    # with col1:
-                    #     if st.button(f"Continue Learning", key=f"continue_{course_id}"):
-                    #         st.session_state.current_course = course_id
-                    #         st.session_state.selected = "Learning Path"
-                    #         st.rerun()
-                    
-                    with col2:
-                        st.progress(int(progress or 0) / 100)
-                    
-                    with col3:
-                        difficulty_color = {"Beginner": "🟢", "Intermediate": "🟡", "Advanced": "🔴"}
-                        st.markdown(f"{difficulty_color.get(difficulty, '⚪')} {difficulty}")
+                        """, unsafe_allow_html=True)
+                        
+                        col1, col2, col3 = st.columns([1, 1, 1])
+                        
+                        with col2:
+                            st.progress(float(progress) / 100)
+                        
+                        with col3:
+                            difficulty_color = {"Beginner": "🟢", "Intermediate": "🟡", "Advanced": "🔴"}
+                            st.markdown(f"{difficulty_color.get(difficulty, '⚪')} {difficulty}")
+                except Exception as e:
+                    st.error(f"Error displaying course: {str(e)}")
+                    continue
         else:
             st.info("No courses enrolled yet. Browse available courses above!")
 
@@ -1732,8 +1740,22 @@ elif selected == "Challenges":
                         conn.commit()
                         conn.close()
                         
-                        # Show success message instead of rerunning
+                        # Show detailed results immediately
                         st.success(f"Quiz submitted successfully! Score: {score:.1f}%")
+                        for i, (q, ans) in enumerate(zip(video_data["questions"], user_answers)):
+                            st.write(f"**Q{i+1}. {q['question']}**")
+                            st.radio(
+                                "Your answer:",
+                                q["options"],
+                                key=f"quiz_result_immediate_{challenge_id}_{i}",
+                                index=q["options"].index(ans["selected"]),
+                                disabled=True
+                            )
+                            if ans["selected"] == ans["correct"]:
+                                st.success(f"✅ Correct! Your answer: {ans['selected']}")
+                            else:
+                                st.error(f"❌ Incorrect. Your answer: {ans['selected']}")
+                                st.info(f"The correct answer was: {ans['correct']}")
         
         # Coding exercises section
         if has_coding:
