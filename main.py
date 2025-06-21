@@ -1004,7 +1004,7 @@ with st.sidebar:
     # User info section
     if st.session_state.current_user:
         st.markdown(f"### 👋 Welcome, {st.session_state.current_user[1]}!")
-        st.markdown(f"**Level:** {st.session_state.current_user[3]}")
+        st.markdown(f"**Level:** {st.session_state.current_user[4]}")
     
     menu_options = ["Dashboard", "Profile", "My Courses", "Learning Path", "Challenges", "Progress Analytics", "Study Timer"]
     
