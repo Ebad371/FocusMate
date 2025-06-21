@@ -318,10 +318,11 @@ def show_white_noise_player(key_suffix="", show_controls=False, show_stop=True):
                 st.rerun()
     
     if st.session_state.white_noise_playing:
+        
         # Hidden video player with white noise
         st.markdown(f"""
         <div style="display: none">
-        <iframe width="1" height="1" src="https://www.youtube.com/embed/nMfPqeZjc2c?autoplay=1&controls=0" allow="autoplay">
+        <iframe width="1" height="1" src="https://www.youtube.com/embed/QH0t_ogClhA?autoplay=1&controls=0" allow="autoplay">
         </iframe>
         </div>
         """, unsafe_allow_html=True)
@@ -363,6 +364,12 @@ if "elapsed_before_pause" not in st.session_state:
     st.session_state.elapsed_before_pause = 0
 if "white_noise_playing" not in st.session_state:
     st.session_state.white_noise_playing = False
+
+# Ensure timer state is always initialized before any usage
+if 'work_elapsed' not in st.session_state:
+    st.session_state.work_elapsed = 0
+if 'break_elapsed' not in st.session_state:
+    st.session_state.break_elapsed = 0
 
 # Page configuration
 st.set_page_config(
@@ -1026,222 +1033,145 @@ with st.sidebar:
 
 # Dashboard Page
 if selected == "Dashboard":
+    if st.session_state.white_noise_playing:
+        show_white_noise_player("dashboard", show_controls=False)
     if not st.session_state.current_user:
         st.warning("Please set up your profile first!")
         st.stop()
-    
-    st.title("📊 Learning Dashboard")
-    
-    # Get user statistics
+
+    # --- HEADER ---
+    # Live timer display for top right
+    def get_live_timer_str():
+        if 'timer_started' in st.session_state and st.session_state.timer_started and st.session_state.start_time:
+            # Timer is running
+            elapsed = int(time.time() - st.session_state.start_time)
+            if st.session_state.is_break:
+                total = st.session_state.break_elapsed + elapsed
+            else:
+                total = st.session_state.work_elapsed + elapsed
+        else:
+            # Timer is paused or stopped
+            if st.session_state.is_break:
+                total = st.session_state.break_elapsed
+            else:
+                total = st.session_state.work_elapsed
+        h = total // 3600
+        m = (total % 3600) // 60
+        s = total % 60
+        return f"{h:02d}:{m:02d}:{s:02d}"
+
+    st.markdown("""
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.2rem; font-weight: 700;">Welcome, <span style='color: #667eea;'>{name}!</span></div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div style="font-size: 1.5rem; font-family: 'Roboto Mono', monospace; background: #f5f6fa; border-radius: 8px; padding: 0.5rem 1.2rem; letter-spacing: 0.1em; color: #333;">
+                {timer}
+            </div>
+            <span style="font-size: 1.5rem; color: #667eea;">🔔</span>
+            <span style="font-size: 2rem; color: #667eea;">👤</span>
+        </div>
+    </div>
+    """.format(
+        name=st.session_state.current_user[1],
+        timer=get_live_timer_str()
+    ), unsafe_allow_html=True)
+
+    # --- STATS CARDS ---
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    # Get enrolled courses
-    cursor.execute('''
-    SELECT COUNT(*) FROM user_progress WHERE user_id = ?
-    ''', (st.session_state.user_id,))
+    cursor.execute('''SELECT COUNT(*) FROM user_progress WHERE user_id = ?''', (st.session_state.user_id,))
     total_courses = cursor.fetchone()[0]
-    
-    # Get completed courses
-    cursor.execute('''
-    SELECT COUNT(*) FROM user_progress 
-    WHERE user_id = ? AND status = 'Completed'
-    ''', (st.session_state.user_id,))
+    cursor.execute('''SELECT COUNT(*) FROM user_progress WHERE user_id = ? AND status = 'Completed' ''', (st.session_state.user_id,))
     completed_courses = cursor.fetchone()[0]
-    
-    # Get average progress
-    cursor.execute('''
-    SELECT AVG(progress_percentage) FROM user_progress WHERE user_id = ?
-    ''', (st.session_state.user_id,))
+    cursor.execute('''SELECT AVG(progress_percentage) FROM user_progress WHERE user_id = ?''', (st.session_state.user_id,))
     avg_progress = cursor.fetchone()[0] or 0
-    
-    # Get study sessions this week
-    cursor.execute('''
-    SELECT COUNT(*) FROM study_sessions 
-    WHERE user_id = ? AND created_at >= date('now', '-7 days')
-    ''', (st.session_state.user_id,))
+    cursor.execute('''SELECT COUNT(*) FROM study_sessions WHERE user_id = ? AND created_at >= date('now', '-7 days')''', (st.session_state.user_id,))
     weekly_sessions = cursor.fetchone()[0]
-    
     conn.close()
-    
-    # Performance metrics
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown(f"""
-        <div class="metric-card">
-            <h3>{total_courses}</h3>
-            <p>Total Enrolled</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(f"""
-        <div class="metric-card">
-            <h3>{completed_courses}</h3>
-            <p>Completed</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown(f"""
-        <div class="metric-card">
-            <h3>{int(avg_progress)}%</h3>
-            <p>Avg Progress</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown(f"""
-        <div class="metric-card">
-            <h3>{weekly_sessions}</h3>
-            <p>Study Sessions</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-   
-    
-    # Recent activity and upcoming items
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("📚 My Courses")
-        
-        # Get user's courses with more detailed info
+
+    st.markdown("""
+    <div style="display: flex; gap: 1.5rem; margin-bottom: 2rem;">
+        <div style="flex:1; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 600; color: #fff;">Total Enrolled<br><span style='font-size:2.2rem; font-weight:700;'>{}</span></div>
+        <div style="flex:1; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 600; color: #fff;">Completed<br><span style='font-size:2.2rem; font-weight:700;'>{}</span></div>
+        <div style="flex:1; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 600; color: #fff;">Average Progress<br><span style='font-size:2.2rem; font-weight:700;'>{}%</span></div>
+        <div style="flex:1; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 1.5rem; text-align: center; font-size: 1.3rem; font-weight: 600; color: #fff;">Study Sessions<br><span style='font-size:2.2rem; font-weight:700;'>{}</span></div>
+    </div>
+    """.format(total_courses, completed_courses, int(avg_progress), weekly_sessions), unsafe_allow_html=True)
+
+    # --- MAIN CONTENT LAYOUT ---
+    col_left, col_right = st.columns([2, 1], gap="large")
+    with col_left:
+        # Ongoing Course Card
+        st.markdown("<div style='font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;'>Ongoing course</div>", unsafe_allow_html=True)
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('''
-        SELECT c.name, up.progress_percentage, up.overall_score, up.status, c.difficulty_level,
-               (SELECT COUNT(*) FROM reflections r 
-                JOIN challenges ch ON r.challenge_id = ch.id 
-                WHERE ch.course_id = c.id AND r.user_id = up.user_id) as reflection_count
-        FROM courses c
-        JOIN user_progress up ON c.id = up.course_id
-        WHERE up.user_id = ?
-        ORDER BY up.last_accessed DESC
-        ''', (st.session_state.user_id,))
-        user_courses = cursor.fetchall()
+        cursor.execute('''SELECT c.id, c.name, c.difficulty_level, up.progress_percentage, up.overall_score, up.status, ch.title, ch.level, ch.quiz_data, c.description FROM courses c JOIN user_progress up ON c.id = up.course_id LEFT JOIN challenges ch ON ch.course_id = c.id AND ch.level = 1 WHERE up.user_id = ? ORDER BY up.last_accessed DESC LIMIT 1''', (st.session_state.user_id,))
+        ongoing = cursor.fetchone()
         conn.close()
-        
-        if user_courses:
-            for course in user_courses:
-                progress_color = "success" if course[3] == "Completed" else "info"
-                st.markdown(f"""
-                <div class="course-card">
-                    <h4>{course[0]}</h4>
-                    <p><strong>Level:</strong> {course[4]}</p>
-                    <p><strong>Progress:</strong> {int(course[1] or 0)}%</p>
-                    <p><strong>Score:</strong> {int(course[2] or 0)}%</p>
-                    <p><strong>Reflections:</strong> {course[5]}</p>
-                    <span class="badge badge-{progress_color}">{course[3]}</span>
-                </div>
-                """, unsafe_allow_html=True)
-        else:
-            st.info("No courses enrolled yet. Check out the Learning Path!")
-    
-    with col2:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #FF9D6C 0%, #FF6B6B 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;'>
-            <h3 style='color: white; margin: 0; text-align: center;'>🏆 Achievement Streak</h3>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Calculate current streak
-        streak = calculate_achievement_streak(st.session_state.user_id)
-        
-        # Display streak in a fancy way
-        st.markdown(f"""
-        <div style='text-align: center; padding: 1rem; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 1rem;'>
-            <h1 style='color: #FF6B6B; font-size: 3rem; margin: 0;'>{streak}</h1>
-            <p style='color: #666; margin: 0;'>Days in a Row</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Visual representation with improved design
-        st.markdown("""
-        <div style='background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 1rem;'>
-            <p style='color: #666; margin-bottom: 0.5rem; text-align: center;'>Your Streak Journey</p>
-        """, unsafe_allow_html=True)
-        
-        cols = st.columns(7)
-        for i in range(7):
-            if i < streak:
-                cols[i].markdown(
-                    f"""<div style='text-align: center;'>
-                        <div style='font-size: 1.5rem; color: #FF6B6B;'>🔥</div>
-                        <div style='font-size: 0.8rem; color: #666;'>Day {i+1}</div>
-                    </div>""", 
-                    unsafe_allow_html=True
-                )
+        if ongoing:
+            course_id, course_name, diff, progress, score, status, ch_title, ch_level, quiz_data, course_desc = ongoing
+            # Try to get next topics/chapters from quiz_data if available
+            topics_html = ""
+            if quiz_data:
+                try:
+                    video_data = json.loads(quiz_data)
+                    if "code_snippets" in video_data and video_data["code_snippets"]:
+                        topics_html = "<ul style='margin:0 0 0 1.2rem;'>" + "".join([f"<li>{t.get('title', 'Topic')}</li>" for t in video_data["code_snippets"][:5]]) + "</ul>"
+                    elif "questions" in video_data and video_data["questions"]:
+                        topics_html = "<ul style='margin:0 0 0 1.2rem;'>" + "".join([f"<li>{q.get('question', 'Quiz')}</li>" for q in video_data["questions"][:5]]) + "</ul>"
+                    elif course_desc:
+                        topics_html = f"<div style='color:#333;font-size:1.05rem;margin-top:0.7rem;'>{course_desc}</div>"
+                    else:
+                        topics_html = ""
+                except:
+                    topics_html = f"<div style='color:#333;font-size:1.05rem;margin-top:0.7rem;'>{course_desc}</div>"
             else:
-                cols[i].markdown(
-                    f"""<div style='text-align: center;'>
-                        <div style='font-size: 1.5rem; color: #DDD;'>⚪</div>
-                        <div style='font-size: 0.8rem; color: #999;'>Day {i+1}</div>
-                    </div>""",
-                    unsafe_allow_html=True
-                )
-        
-        st.markdown("</div>", unsafe_allow_html=True)
-        
-        # Show achievements with better styling
-        st.markdown("""
-        <div style='background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);'>
-            <p style='color: #666; margin-bottom: 0.5rem; text-align: center;'>Achievements Unlocked</p>
-        """, unsafe_allow_html=True)
-        
-        if streak >= 3:
-            st.markdown("""
-            <div style='background: linear-gradient(135deg, #FFF3E6 0%, #FFE5CC 100%); padding: 0.5rem; border-radius: 5px; margin-bottom: 0.5rem;'>
-                <p style='color: #FF9D6C; margin: 0;'>🎯 3-Day Warrior</p>
+                topics_html = f"<div style='color:#333;font-size:1.05rem;margin-top:0.7rem;'>{course_desc}</div>"
+            # Card content as HTML
+            card_html = f"""
+            <div style='background: #e8eafd; border-radius: 16px; padding: 1.5rem; margin-bottom: 0.5rem; position: relative;'>
+                <div style='font-size: 1rem; font-weight: 600; color: #667eea; margin-bottom: 0.2rem;'>{diff}</div>
+                <div style='font-size: 1.3rem; font-weight: 700; color: #222;'>{course_name}</div>
+                <div style='font-size: 1.1rem; color: #444; margin-bottom: 0.5rem;'>Progress: {int(progress or 0)}% &nbsp; Score: {int(score or 0)}%</div>
+                {topics_html}
             </div>
-            """, unsafe_allow_html=True)
-        if streak >= 5:
-            st.markdown("""
-            <div style='background: linear-gradient(135deg, #FFE5E5 0%, #FFD6D6 100%); padding: 0.5rem; border-radius: 5px; margin-bottom: 0.5rem;'>
-                <p style='color: #FF6B6B; margin: 0;'>🔥 5-Day Champion</p>
-            </div>
-            """, unsafe_allow_html=True)
-        if streak >= 7:
-            st.markdown("""
-            <div style='background: linear-gradient(135deg, #E6F9FF 0%, #CCF2FF 100%); padding: 0.5rem; border-radius: 5px; margin-bottom: 0.5rem;'>
-                <p style='color: #3CAEA3; margin: 0;'>⭐ 7-Day Master</p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        st.markdown("</div>", unsafe_allow_html=True)
-        
-        # Motivational message based on streak
-        if streak == 0:
-            st.markdown("""
-            <div style='text-align: center; padding: 1rem; color: #666; font-style: italic;'>
-                Start your streak today! 💪
-            </div>
-            """, unsafe_allow_html=True)
-        elif streak < 3:
-            st.markdown("""
-            <div style='text-align: center; padding: 1rem; color: #666; font-style: italic;'>
-                Great start! Keep going to unlock more achievements! 🌟
-            </div>
-            """, unsafe_allow_html=True)
-        elif streak < 5:
-            st.markdown("""
-            <div style='text-align: center; padding: 1rem; color: #666; font-style: italic;'>
-                You're on fire! The 5-Day Champion badge awaits! 🔥
-            </div>
-            """, unsafe_allow_html=True)
-        elif streak < 7:
-            st.markdown("""
-            <div style='text-align: center; padding: 1rem; color: #666; font-style: italic;'>
-                Almost there! The 7-Day Master badge is within reach! ⭐
-            </div>
-            """, unsafe_allow_html=True)
+            """
+            st.markdown(card_html, unsafe_allow_html=True)
+            
         else:
-            st.markdown("""
-            <div style='text-align: center; padding: 1rem; color: #666; font-style: italic;'>
-                Incredible dedication! You're a true learning master! 👑
+            st.info("No ongoing course found.")
+
+        # Timer Section (shared with Study Timer)
+        st.markdown("<div style='font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;'>Timer</div>", unsafe_allow_html=True)
+        show_pomodoro_timer()
+
+    with col_right:
+        # Relevant Courses
+        st.markdown("<div style='font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;'>Relevant Courses</div>", unsafe_allow_html=True)
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('''SELECT c.name, c.difficulty_level, up.progress_percentage, up.overall_score, up.status FROM courses c JOIN user_progress up ON c.id = up.course_id WHERE up.user_id = ? ORDER BY up.last_accessed DESC LIMIT 3''', (st.session_state.user_id,))
+        relevant = cursor.fetchall()
+        conn.close()
+        for rel in relevant:
+            course_name, diff, progress, score, status = rel
+            st.markdown(f"""
+            <div style="background: #e8eafd; border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1rem;">
+                <div style="font-size: 0.95rem; font-weight: 600; color: #667eea;">{diff}</div>
+                <div style="font-size: 1.1rem; font-weight: 700; color: #222;">{course_name}</div>
+                <div style="font-size: 0.95rem; color: #444;">Progress: {int(progress or 0)}% &nbsp; Score: {int(score or 0)}%</div>
             </div>
             """, unsafe_allow_html=True)
+
+        # Achievement Streak
+        st.markdown("<div style='font-size:1.2rem; font-weight:700; margin:1.5rem 0 0.5rem 0;'>Achievement Streak</div>", unsafe_allow_html=True)
+        streak = calculate_achievement_streak(st.session_state.user_id)
+        st.markdown(f"""
+        <div style="background: #f5f6fa; border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1rem;">
+            <div style="font-size: 1.1rem; font-weight: 600; color: #667eea;">{streak} days</div>
+            <div style="font-size: 0.95rem; color: #444;">Start your learning streak today!!!</div>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Profile Setup Page
 elif selected == "Profile":
@@ -1357,7 +1287,11 @@ elif selected == "Profile":
                 
                 with col_btn2:
                     if st.form_submit_button("Logout", type="secondary", use_container_width=True):
-                        cookie_manager.delete('user_data')
+                        try:
+                            cookie_manager.delete('user_data')
+                        except:
+                            # Cookie might not exist, which is fine
+                            pass
                         st.session_state.current_user = None
                         st.session_state.user_id = None
                         st.session_state.authentication_status = None
@@ -1404,78 +1338,103 @@ elif selected == "Profile":
 elif selected == "My Courses":
     if st.session_state.white_noise_playing:
         show_white_noise_player("courses", show_controls=False)
-    st.title("📚 My Courses")
-    
-    if not st.session_state.current_user:
-        st.warning("Please set up your profile first!")
-        st.stop()
-    
+
+    # --- HEADER ---
+    # Remove top right timer from this page
+    st.markdown("""
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.2rem; font-weight: 700;">My Courses</div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <span style="font-size: 1.5rem; color: #667eea;">🔔</span>
+            <span style="font-size: 2rem; color: #667eea;">👤</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # --- MAIN LAYOUT ---
     # Get all available courses
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM courses')
     all_courses = cursor.fetchall()
-    
     # Get user's enrolled courses
-    cursor.execute('''
-    SELECT course_id FROM user_progress WHERE user_id = ?
-    ''', (st.session_state.user_id,))
+    cursor.execute('''SELECT course_id FROM user_progress WHERE user_id = ?''', (st.session_state.user_id,))
     enrolled_course_ids = [row[0] for row in cursor.fetchall()]
     conn.close()
-    
+
     tabs = st.tabs(["Available Courses", "My Enrolled Courses"])
-    
+
     with tabs[0]:
         st.subheader("🌟 Available Courses")
-        
-        # Group courses by category
-        categories = {}
+        # Show all available courses in a card layout
+        st.markdown("<div style='display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: flex-start;'>", unsafe_allow_html=True)
         for course in all_courses:
-            category = course[2]
-            if category not in categories:
-                categories[category] = []
-            categories[category].append(course)
-        
-        for category, courses in categories.items():
-            st.markdown(f"### {category}")
-            
-            for course in courses:
-                course_id, name, _, total_chapters, total_lectures, difficulty, description = course[:7]
-                
-                with st.expander(f"{name} - {difficulty}"):
-                    col1, col2 = st.columns([3, 1])
-                    
-                    with col1:
-                        st.write(f"**Description:** {description}")
-                        st.write(f"**Chapters:** {total_chapters} | **Lectures:** {total_lectures}")
-                        st.write(f"**Difficulty:** {difficulty}")
-                    
-                    with col2:
-                        if course_id in enrolled_course_ids:
-                            st.success("✅ Enrolled")
-                        else:
-                            if st.button(f"Enroll", key=f"enroll_{course_id}"):
-                                # Enroll user in course
-                                conn = get_db_connection()
-                                cursor = conn.cursor()
-                                cursor.execute('''
-                                INSERT INTO user_progress (user_id, course_id, progress_percentage, overall_score, status)
-                                VALUES (?, ?, ?, ?, ?)
-                                ''', (st.session_state.user_id, course_id, 0, 0, "In Progress"))
-                                conn.commit()
-                                conn.close()
-                                st.success("Enrolled successfully!")
-                                st.rerun()
-    
-    with tabs[1]:
-        st.subheader("📖 My Enrolled Courses")
+            course_id, name, category, total_chapters, total_lectures, difficulty, description = course[:7]
+            enrolled = course_id in enrolled_course_ids
+            # Fetch dynamic progress, score, reflection for this course if enrolled
+            progress = score = reflection = 0
+            if enrolled:
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute('''SELECT progress_percentage, overall_score FROM user_progress WHERE user_id = ? AND course_id = ?''', (st.session_state.user_id, course_id))
+                row = cursor.fetchone()
+                if row:
+                    progress, score = row[0] or 0, row[1] or 0
+                cursor.execute('''SELECT COUNT(*) FROM reflections r JOIN challenges ch ON r.challenge_id = ch.id WHERE ch.course_id = ? AND r.user_id = ?''', (course_id, st.session_state.user_id))
+                reflection = cursor.fetchone()[0] or 0
+                conn.close()
+            # Card content
+            st.markdown(f"""
+            <div style='background: #e8eafd; border-radius: 20px; padding: 2.2rem 2.2rem 1.2rem 2.2rem; color: #222; min-width:380px; max-width:480px; margin-bottom:2.2rem; box-shadow:0 2px 8px rgba(102,126,234,0.07);'>
+                <div style='font-size:1.1rem; font-weight:600; color:#667eea; margin-bottom:0.2rem;'>{difficulty}</div>
+                <div style='font-size:1.5rem; font-weight:800; color:#222; margin-bottom:0.2rem;'>{name}</div>
+                <div style='font-size:1.1rem; color:#222; margin-bottom:0.7rem;'>{description}</div>
+                <div style='font-size:1.05rem; color:#222; margin-bottom:0.2rem;'>Chapters: {total_chapters} &nbsp; Lectures: {total_lectures}</div>
+                <div style='font-size:1.05rem; color:#222; margin-bottom:0.2rem;'>Progress: {int(progress)}% &nbsp; Score: {int(score)}% &nbsp; Reflection: {int(reflection)}%</div>
+            </div>
+            """, unsafe_allow_html=True)
+            # Enrolled badge or Enroll button below the card
+            if enrolled:
+                st.markdown("<div style='margin-top:-1.2rem; margin-bottom:1.5rem;'><span style='font-size:1.2rem; color:#28a745;'>✅ Enrolled</span></div>", unsafe_allow_html=True)
+            else:
+                # Only the Streamlit button, styled
+                enroll_btn = st.button(f"Enroll in {name}", key=f"enroll_{course_id}")
+                st.markdown("""
+                <style>
+                div[data-testid="stButton"] > button {{
+                    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+                    color: #fff !important;
+                    border: none !important;
+                    border-radius: 12px !important;
+                    padding: 0.9rem 2.5rem !important;
+                    font-size: 1.1rem !important;
+                    font-weight: 700 !important;
+                    margin-top: 0.5rem;
+                    margin-bottom: 1.5rem;
+                    box-shadow: 0 2px 8px rgba(102,126,234,0.07);
+                }}
+                </style>
+                """, unsafe_allow_html=True)
+                if enroll_btn:
+                    conn = get_db_connection()
+                    cursor = conn.cursor()
+                    cursor.execute('''INSERT INTO user_progress (user_id, course_id, progress_percentage, overall_score, status) VALUES (?, ?, ?, ?, ?)''', (st.session_state.user_id, course_id, 0, 0, "In Progress"))
+                    conn.commit()
+                    conn.close()
+                    st.success("Enrolled successfully!")
+                    st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
+    with tabs[1]:
+        # --- ENROLLED COURSES LAYOUT ---
+        st.markdown("""
+        <div style='display: flex; flex-direction: column; gap: 2.5rem; margin-bottom: 2rem;'>
+        """, unsafe_allow_html=True)
         # Get detailed info about enrolled courses
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('''
-        SELECT c.id, c.name, c.category, c.total_chapters, c.total_lectures, c.difficulty_level, c.description,
-               up.progress_percentage, up.overall_score, up.status, up.last_accessed
+        SELECT c.id, c.name, c.difficulty_level, c.description, up.progress_percentage, up.overall_score, up.status, up.last_accessed
         FROM courses c
         JOIN user_progress up ON c.id = up.course_id
         WHERE up.user_id = ?
@@ -1483,48 +1442,38 @@ elif selected == "My Courses":
         ''', (st.session_state.user_id,))
         enrolled_courses = cursor.fetchall()
         conn.close()
-        
         if enrolled_courses:
-            for course in enrolled_courses:
-                try:
-                    course_id = course[0]
-                    name = course[1]
-                    category = course[2]
-                    total_chapters = course[3]
-                    total_lectures = course[4]
-                    difficulty = course[5]
-                    description = course[6]
-                    progress = course[7] or 0
-                    score = course[8] or 0
-                    status = course[9]
-                    last_accessed = course[10]
-                    
-                    with st.container():
-                        st.markdown(f"""
-                        <div class="course-card">
-                            <h3>{name}</h3>
-                            <p>{description}</p>
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <strong>Progress:</strong> {progress:.1f}% | 
-                                    <strong>Score:</strong> {score:.1f}% | 
-                                    <strong>Status:</strong> {status}
-                                </div>
-                            </div>
-                        </div>
-                        """, unsafe_allow_html=True)
-                        
-                        col1, col2, col3 = st.columns([1, 1, 1])
-                        
-                        with col2:
-                            st.progress(float(progress) / 100)
-                        
-                        with col3:
-                            difficulty_color = {"Beginner": "🟢", "Intermediate": "🟡", "Advanced": "🔴"}
-                            st.markdown(f"{difficulty_color.get(difficulty, '⚪')} {difficulty}")
-                except Exception as e:
-                    st.error(f"Error displaying course: {str(e)}")
-                    continue
+            # Main/ongoing course (first)
+            main_course = enrolled_courses[0]
+            course_id, name, difficulty, description, progress, score, status, last_accessed = main_course
+            # Dynamic reflection count for this course
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute('''SELECT COUNT(*) FROM reflections r JOIN challenges ch ON r.challenge_id = ch.id WHERE ch.course_id = ? AND r.user_id = ?''', (course_id, st.session_state.user_id))
+            reflection = cursor.fetchone()[0] or 0
+            conn.close()
+            st.markdown(f"""
+            <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 24px; padding: 2.2rem 2.2rem 1.2rem 2.2rem; color: #fff; margin-bottom: 2.5rem;">
+                <div style='font-size:1.1rem; font-weight:600; color:#dbeafe; margin-bottom:0.2rem;'>{difficulty}</div>
+                <div style='font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:0.2rem;'>{name}</div>
+                <div style='font-size:1.05rem; color:#fff; margin-bottom:0.2rem;'>Progress: {int(progress)}% &nbsp; Score: {int(score)}% &nbsp; Reflection: {int(reflection)}%</div>
+            </div>
+            """, unsafe_allow_html=True)
+            # Other enrolled courses (up to 3 more)
+            for rel in enrolled_courses[1:]:
+                course_id, name, difficulty, description, progress, score, status, last_accessed = rel
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute('''SELECT COUNT(*) FROM reflections r JOIN challenges ch ON r.challenge_id = ch.id WHERE ch.course_id = ? AND r.user_id = ?''', (course_id, st.session_state.user_id))
+                reflection = cursor.fetchone()[0] or 0
+                conn.close()
+                st.markdown(f"""
+                <div style="background: #e8eafd; border-radius: 20px; padding: 1.5rem 2rem 1.2rem 2rem; color: #222; margin-bottom: 2.2rem;">
+                    <div style='font-size:1.1rem; font-weight:600; color:#667eea; margin-bottom:0.2rem;'>{difficulty}</div>
+                    <div style='font-size:1.2rem; font-weight:800; color:#222; margin-bottom:0.2rem;'>{name}</div>
+                    <div style='font-size:1.05rem; color:#222; margin-bottom:0.2rem;'>Progress: {int(progress)}% &nbsp; Score: {int(score)}% &nbsp; Reflection: {int(reflection)}%</div>
+                </div>
+                """, unsafe_allow_html=True)
         else:
             st.info("No courses enrolled yet. Browse available courses above!")
 
@@ -1532,67 +1481,118 @@ elif selected == "My Courses":
 elif selected == "Learning Path":
     if st.session_state.white_noise_playing:
         show_white_noise_player("learning_path", show_controls=False)
-    st.title("🗺️ Learning Path")
-    
-    if not st.session_state.current_user:
-        st.warning("Please set up your profile first!")
-        st.stop()
-    
-    # Course selection
+
+    # Remove top right timer from this page
+    st.markdown("""
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.2rem; font-weight: 700;">Learning Path</div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <span style="font-size: 1.5rem; color: #667eea;">🔔</span>
+            <span style="font-size: 2rem; color: #667eea;">👤</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Ensure card click state is initialized
+    if "learning_path_selected_course_id" not in st.session_state:
+        st.session_state.learning_path_selected_course_id = None
+
+    # --- DYNAMIC COURSE GRID ---
+    # Get all enrolled courses and their info
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
-    SELECT c.id, c.name FROM courses c
+    SELECT c.id, c.name, c.difficulty_level, c.description, up.progress_percentage, up.overall_score
+    FROM courses c
     JOIN user_progress up ON c.id = up.course_id
     WHERE up.user_id = ?
+    ORDER BY c.difficulty_level, c.name
     ''', (st.session_state.user_id,))
     user_courses = cursor.fetchall()
     conn.close()
-    
-    if not user_courses:
-        st.warning("Please enroll in a course first from 'My Courses' section!")
-        st.stop()
-    
-    # Course selector
-    course_options = {course[1]: course[0] for course in user_courses}
-    selected_course_name = st.selectbox("Select Course", list(course_options.keys()))
-    selected_course_id = course_options[selected_course_name]
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-    SELECT DISTINCT ch.id, ch.course_id, ch.level, ch.title, ch.description, ch.video_url, ch.quiz_data
-    FROM challenges ch
-    WHERE ch.course_id = ?
-    ORDER BY ch.level
-    ''', (selected_course_id,))
-    challenges = cursor.fetchall()
-    conn.close()
-
-    # Display challenges
-    for i, challenge in enumerate(challenges):
-        challenge_id, course_id, level, title, description, video_url, quiz_data = challenge[:7]
-        
-        with st.expander(f"Level {level}: {title}", expanded=i == 0):
-            # Get the video data
-            video_data = json.loads(quiz_data)
-            
-            # Show intro text if it exists
-            if "intro_text" in video_data and video_data["intro_text"]:
-                st.markdown("### 📝 Introduction")
-                st.write(video_data["intro_text"])
-            
-            # Display video if URL exists
-            if video_url:
-                st.markdown("### 📺 Video Lesson")
-                # Extract video ID from URL
-                video_id = video_url.split("v=")[-1] if "v=" in video_url else video_url.split("/")[-1]
-                st.video(f"https://youtube.com/watch?v={video_id}")
-            
-            # Show conclusion text if it exists
-            if "conclusion_text" in video_data and video_data["conclusion_text"]:
-                st.markdown("### 🎯 Summary")
-                st.write(video_data["conclusion_text"])
+    # Group by actual difficulty values in the data, mapping from difficulty_level
+    difficulty_map = {'easy': 'Easy', 'medium': 'Medium', 'hard': 'Hard'}
+    level_to_key = {'beginner': 'easy', 'intermediate': 'medium', 'advanced': 'hard'}
+    grouped = {}
+    for course in user_courses:
+        # Map difficulty_level to key
+        diff_raw = course[2].strip().lower()
+        diff_key = level_to_key.get(diff_raw, diff_raw)
+        if diff_key not in grouped:
+            grouped[diff_key] = []
+        grouped[diff_key].append(course)
+    # Only show sections for difficulties that exist
+    if st.session_state.learning_path_selected_course_id is None:
+        for diff_key, section_title in difficulty_map.items():
+            if diff_key in grouped and grouped[diff_key]:
+                st.markdown(f"<div style='font-size:1.3rem; font-weight:700; margin-top:2rem; margin-bottom:0.7rem;'>{section_title}</div>", unsafe_allow_html=True)
+                st.markdown("<div style='display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.5rem;'>", unsafe_allow_html=True)
+                for course in grouped[diff_key]:
+                    course_id, name, difficulty, description, progress, score = course
+                    # Dynamic reflection count
+                    conn = get_db_connection()
+                    cursor = conn.cursor()
+                    cursor.execute('''SELECT COUNT(*) FROM reflections r JOIN challenges ch ON r.challenge_id = ch.id WHERE ch.course_id = ? AND r.user_id = ?''', (course_id, st.session_state.user_id))
+                    reflection = cursor.fetchone()[0] or 0
+                    conn.close()
+                    col_card, _ = st.columns([1, 2])
+                    with col_card:
+                        st.markdown(f"""
+                        <div style='background: #e8eafd; border-radius: 18px; padding: 1.5rem 2rem 1.2rem 2rem; color: #222; min-width:320px; max-width:340px; margin-bottom:0.2rem; margin-right:0.7rem; display:inline-block; position:relative;'>
+                            <div style='font-size:1.05rem; font-weight:600; color:#667eea; margin-bottom:0.2rem;'>{section_title}</div>
+                            <div style='font-size:1.15rem; font-weight:800; color:#222; margin-bottom:0.2rem;'>{name}</div>
+                            <div style='font-size:1.01rem; color:#222; margin-bottom:0.2rem;'>Progress: {int(progress)}% &nbsp; Score: {int(score)}% &nbsp; Reflection: {int(reflection)}%</div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        st.markdown("""
+                        <style>
+                        .lp-card-btn > button {
+                            width: 100% !important;
+                            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+                            color: #fff !important;
+                            border: none !important;
+                            border-radius: 12px !important;
+                            font-size: 1.08rem !important;
+                            font-weight: 700 !important;
+                            margin-top: -0.5rem !important;
+                            margin-bottom: 1.1rem !important;
+                            box-shadow: 0 2px 8px rgba(102,126,234,0.07);
+                        }
+                        .lp-card-btn > button:hover {
+                            background: linear-gradient(90deg, #764ba2 0%, #667eea 100%) !important;
+                        }
+                        </style>
+                        """, unsafe_allow_html=True)
+                        if st.button("Go to Course", key=f"lp_card_{course_id}", help=f"View {name}"):
+                            st.session_state.learning_path_selected_course_id = course_id
+                            st.rerun()
+    # If a card is selected, show the detailed view on a new screen
+    if st.session_state.learning_path_selected_course_id is not None:
+        st.markdown("<hr style='margin:2rem 0;' />", unsafe_allow_html=True)
+        selected_course_id = st.session_state.learning_path_selected_course_id
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('''SELECT DISTINCT ch.id, ch.course_id, ch.level, ch.title, ch.description, ch.video_url, ch.quiz_data FROM challenges ch WHERE ch.course_id = ? ORDER BY ch.level''', (selected_course_id,))
+        challenges = cursor.fetchall()
+        conn.close()
+        # Back button
+        if st.button("⬅️ Back to Learning Path", key="lp_back"):
+            st.session_state.learning_path_selected_course_id = None
+            st.rerun()
+        # Display challenges (existing code)
+        for i, challenge in enumerate(challenges):
+            challenge_id, course_id, level, title, description, video_url, quiz_data = challenge[:7]
+            with st.expander(f"Level {level}: {title}", expanded=i == 0):
+                video_data = json.loads(quiz_data)
+                if "intro_text" in video_data and video_data["intro_text"]:
+                    st.markdown("### 📝 Introduction")
+                    st.write(video_data["intro_text"])
+                if video_url:
+                    video_id = video_url.split("v=")[-1] if "v=" in video_url else video_url.split("/")[-1]
+                    st.video(f"https://youtube.com/watch?v={video_id}")
+                if "conclusion_text" in video_data and video_data["conclusion_text"]:
+                    st.markdown("### 🎯 Summary")
+                    st.write(video_data["conclusion_text"])
 
 # Challenges Page
 elif selected == "Challenges":
@@ -1616,21 +1616,61 @@ elif selected == "Challenges":
     ''', (st.session_state.user_id,))
     available_courses = cursor.fetchall()
     conn.close()
-    
+
     if not available_courses:
         st.warning("No courses available. Please enroll in courses first!")
         st.stop()
-    
+
     # Course selector
     course_options = {course[1]: course[0] for course in available_courses}
-    
+
+    # Add custom CSS for colorful selectbox
+    st.markdown("""
+    <style>
+    .colorful-selectbox label {
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        color: #764ba2 !important;
+        margin-bottom: 0.3rem !important;
+        display: block;
+    }
+    div[data-baseweb="select"] > div {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 10px rgba(102,126,234,0.13) !important;
+        color: #fff !important;
+        font-size: 1.12rem !important;
+        font-weight: 600 !important;
+        border: 2px solid #764ba2 !important;
+        min-height: 48px !important;
+    }
+    .stSelectbox > div {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 10px rgba(102,126,234,0.13) !important;
+        color: #fff !important;
+        font-size: 1.12rem !important;
+        font-weight: 600 !important;
+        border: 2px solid #764ba2 !important;
+        min-height: 48px !important;
+    }
+    .stSelectbox label {
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        color: #764ba2 !important;
+        margin-bottom: 0.3rem !important;
+        display: block;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    st.markdown('<div class="colorful-selectbox"><label>🎨 <span style="color:#667eea;">Select Course</span></label></div>', unsafe_allow_html=True)
     # Use session state to maintain course selection
     if st.session_state.selected_course_name not in course_options:
         st.session_state.selected_course_name = list(course_options.keys())[0]
         st.session_state.selected_course_id = course_options[st.session_state.selected_course_name]
-    
+
     selected_course_name = st.selectbox(
-        "Select Course",
+        "",
         list(course_options.keys()),
         index=list(course_options.keys()).index(st.session_state.selected_course_name)
     )
@@ -1670,92 +1710,35 @@ elif selected == "Challenges":
         has_coding = "coding_exercises" in video_data and isinstance(video_data["coding_exercises"], list) and len(video_data["coding_exercises"]) > 0
         
         if has_quiz:
-            st.markdown("### 📋 Knowledge Check")
-            
-            # Initialize quiz state for this specific challenge
             quiz_state_key = f"quiz_state_{challenge_id}"
-            if quiz_state_key not in st.session_state:
+            st.markdown('<div class="quiz-title">Quiz</div>', unsafe_allow_html=True)
+            st.markdown('<div class="quiz-subtitle">OOP Concepts</div>', unsafe_allow_html=True)
+            user_answers = []
+            for i, q in enumerate(video_data["questions"]):
+                st.markdown(f'**{q["question"]}**')
+                radio_key = f"quiz_{challenge_id}_{i}"
+                selected = st.radio(
+                    label="",
+                    options=q["options"],
+                    key=radio_key,
+                    index=0,
+                    format_func=lambda x: x,
+                    horizontal=False
+                )
+                user_answers.append({
+                    "question": q["question"],
+                    "selected": selected,
+                    "correct": q["correct"]
+                })
+            if st.button("Submit Quiz", key=f"quiz_submit_{challenge_id}", help="Submit Quiz"):
+                correct = sum(1 for ans in user_answers if ans["selected"] == ans["correct"])
+                score = (correct / len(user_answers)) * 100
                 st.session_state[quiz_state_key] = {
-                    "submitted": False,
-                    "score": None,
-                    "answers": None
+                    "submitted": True,
+                    "score": score,
+                    "answers": user_answers
                 }
-            
-            # Show quiz results if submitted
-            if st.session_state[quiz_state_key]["submitted"] and st.session_state[quiz_state_key]["answers"]:
-                for i, q in enumerate(video_data["questions"]):
-                    st.write(f"**Q{i+1}. {q['question']}**")
-                    answer_data = st.session_state[quiz_state_key]["answers"][i]
-                    selected_index = q["options"].index(answer_data["selected"]) if answer_data["selected"] in q["options"] else 0
-                    st.radio(
-                        "Your answer:",
-                        q["options"],
-                        key=f"quiz_result_{challenge_id}_{i}",
-                        index=selected_index,
-                        disabled=True
-                    )
-                    if answer_data["selected"] == answer_data["correct"]:
-                        st.success(f"✅ Correct! Your answer: {answer_data['selected']}")
-                    else:
-                        st.error(f"❌ Incorrect. Your answer: {answer_data['selected']}")
-                        st.info(f"The correct answer was: {answer_data['correct']}")
-                    
-                    st.success(f"Overall Quiz Score: {st.session_state[quiz_state_key]['score']:.1f}%")
-            
-            # Show quiz form if not submitted
-            else:
-                with st.form(f"quiz_form_{challenge_id}"):
-                    user_answers = []
-                    for i, q in enumerate(video_data["questions"]):
-                        st.write(f"**Q{i+1}. {q['question']}**")
-                        answer = st.radio(
-                            "Select your answer:",
-                            q["options"],
-                            key=f"quiz_{challenge_id}_{i}"
-                        )
-                        user_answers.append({
-                            "question": q["question"],
-                            "selected": answer,
-                            "correct": q["correct"]
-                        })
-                    
-                    if st.form_submit_button("Submit Quiz"):
-                        correct = sum(1 for ans in user_answers if ans["selected"] == ans["correct"])
-                        score = (correct / len(user_answers)) * 100
-                        
-                        # Store quiz results in challenge-specific state
-                        st.session_state[quiz_state_key]["submitted"] = True
-                        st.session_state[quiz_state_key]["score"] = score
-                        st.session_state[quiz_state_key]["answers"] = user_answers
-                        st.session_state.show_reflection = True
-                        
-                        # Save quiz attempt to database
-                        conn = get_db_connection()
-                        cursor = conn.cursor()
-                        cursor.execute('''
-                        INSERT INTO quiz_attempts (user_id, challenge_id, answers, score)
-                        VALUES (?, ?, ?, ?)
-                        ''', (st.session_state.user_id, challenge_id, 
-                             json.dumps(user_answers), score))
-                        conn.commit()
-                        conn.close()
-                        
-                        # Show detailed results immediately
-                        st.success(f"Quiz submitted successfully! Score: {score:.1f}%")
-                        for i, (q, ans) in enumerate(zip(video_data["questions"], user_answers)):
-                            st.write(f"**Q{i+1}. {q['question']}**")
-                            st.radio(
-                                "Your answer:",
-                                q["options"],
-                                key=f"quiz_result_immediate_{challenge_id}_{i}",
-                                index=q["options"].index(ans["selected"]),
-                                disabled=True
-                            )
-                            if ans["selected"] == ans["correct"]:
-                                st.success(f"✅ Correct! Your answer: {ans['selected']}")
-                            else:
-                                st.error(f"❌ Incorrect. Your answer: {ans['selected']}")
-                                st.info(f"The correct answer was: {ans['correct']}")
+                st.success(f"Quiz submitted successfully! Score: {score:.1f}%")
         
         # Coding exercises section
         if has_coding:
@@ -1799,8 +1782,8 @@ elif selected == "Challenges":
                             with st.spinner("Evaluating your code..."):
                                 feedback = evaluate_code_with_gemini(user_code, exercise)
                                 st.success("Code submitted successfully!")
-                                st.markdown("### Feedback")
-                                st.markdown(feedback)
+                                st.session_state.show_reflection = True
+                                st.session_state.current_feedback = feedback
         
         # Reflection section - Show after quiz or coding submission
         if st.session_state.show_reflection:
