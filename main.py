@@ -935,6 +935,10 @@ def calculate_achievement_streak(user_id):
 def load_css():
     st.markdown("""
     <style>
+    body, .main, .block-container {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
     .metric-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         padding: 1rem;
