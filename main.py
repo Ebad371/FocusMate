@@ -377,6 +377,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+# Add viewport meta tag for better mobile/responsive scaling
+st.markdown('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">', unsafe_allow_html=True)
 
 # Initialize cookie manager
 cookie_manager = get_cookie_manager()
@@ -935,53 +937,35 @@ def calculate_achievement_streak(user_id):
 def load_css():
     st.markdown("""
     <style>
-    body, .main, .block-container {
+    html, body, .main, .block-container {
         max-width: 100vw !important;
         overflow-x: hidden !important;
+        box-sizing: border-box !important;
     }
-    .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
-        text-align: center;
-        margin: 0.5rem 0;
+    * {
+        box-sizing: border-box !important;
+        word-break: break-word !important;
     }
-    
-    .course-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        margin: 1rem 0;
-        border-left: 4px solid #667eea;
+    .metric-card,
+    .course-card,
+    .challenge-card {
+        max-width: 100%;
+        width: 100%;
     }
-    
     .progress-ring {
         display: inline-block;
         position: relative;
         width: 120px;
         height: 120px;
         margin: 1rem;
+        max-width: 100%;
     }
-    
-    .challenge-card {
-        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
     .sidebar .sidebar-content {
         background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
     }
-    
     .stProgress .st-bo {
         background-color: #667eea;
     }
-
-    /* Custom styling for primary buttons */
     .stButton > button {
         background-color: #667eea !important;
         color: white !important;
@@ -989,12 +973,10 @@ def load_css():
         border-radius: 5px !important;
         transition: all 0.3s ease !important;
     }
-    
     .stButton > button:hover {
         background-color: #764ba2 !important;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
     }
-    
     .stButton > button:active {
         transform: scale(0.98) !important;
     }
