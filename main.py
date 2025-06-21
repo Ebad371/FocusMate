@@ -1743,6 +1743,20 @@ elif selected == "Challenges":
                     "score": score,
                     "answers": user_answers
                 }
+                # Save quiz attempt to database
+                conn = get_db_connection()
+                cursor = conn.cursor()
+                cursor.execute('''
+                    INSERT INTO quiz_attempts (user_id, challenge_id, answers, score)
+                    VALUES (?, ?, ?, ?)
+                ''', (
+                    st.session_state.user_id,
+                    challenge_id,
+                    json.dumps(user_answers),
+                    score
+                ))
+                conn.commit()
+                conn.close()
                 st.success(f"Quiz submitted successfully! Score: {score:.1f}%")
         
         # Coding exercises section
