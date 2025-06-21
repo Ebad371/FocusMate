@@ -413,6 +413,7 @@ def init_database():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT UNIQUE,
+        password TEXT,
         experience_level TEXT,
         learning_goals TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -555,14 +556,14 @@ if "code_states" not in st.session_state:
 
 init_session_state()
 
-def create_user(name, email, experience_level, learning_goals):
+def create_user(name, email, password, experience_level, learning_goals):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         cursor.execute('''
-        INSERT INTO users (name, email, experience_level, learning_goals)
-        VALUES (?, ?, ?, ?)
-        ''', (name, email, experience_level, learning_goals))
+        INSERT INTO users (name, email, password, experience_level, learning_goals)
+        VALUES (?, ?, ?, ?, ?)
+        ''', (name, email, password, experience_level, learning_goals))
         user_id = cursor.lastrowid
         conn.commit()
         return user_id
@@ -1184,26 +1185,29 @@ elif selected == "Profile":
         
         # Login section first
         st.markdown("### 🔑 Login to Your Account")
-        login_email = st.text_input("Your Email", key="login_email")
-        if st.button("Login", use_container_width=True):
-            user = get_user_by_email(login_email)
-            if user:
-                st.session_state.user_id = user[0]
-                st.session_state.current_user = user
-                st.session_state.authentication_status = True
-                # Store user data in cookie
-                user_data = {
-                    'id': user[0],
-                    'name': user[1],
-                    'email': user[2],
-                    'experience_level': user[3],
-                    'learning_goals': user[4]
-                }
-                cookie_manager.set('user_data', json.dumps(user_data), expires_at=datetime.datetime.now() + datetime.timedelta(days=30))
-                st.success(f"Welcome back, {user[1]}!")
-                st.rerun()
-            else:
-                st.error("User not found. Please check your email or create a new profile below.")
+        with st.form("login_form"):
+            login_email = st.text_input("Your Email", key="login_email")
+            login_password = st.text_input("Password", type="password", key="login_password")
+            login_submit = st.form_submit_button("Login", use_container_width=True)
+            if login_submit:
+                user = get_user_by_email(login_email)
+                if user and login_password and user[3] == login_password:
+                    st.session_state.user_id = user[0]
+                    st.session_state.current_user = user
+                    st.session_state.authentication_status = True
+                    # Store user data in cookie
+                    user_data = {
+                        'id': user[0],
+                        'name': user[1],
+                        'email': user[2],
+                        'experience_level': user[4],
+                        'learning_goals': user[5]
+                    }
+                    cookie_manager.set('user_data', json.dumps(user_data), expires_at=datetime.datetime.now() + datetime.timedelta(days=30))
+                    st.success(f"Welcome back, {user[1]}!")
+                    st.rerun()
+                else:
+                    st.error("Invalid email or password. Please try again or create a new profile below.")
         
         # Separator
         st.markdown("---")
@@ -1223,16 +1227,22 @@ elif selected == "Profile":
             with st.form("profile_form"):
                 name = st.text_input("Full Name", value=saved_name)
                 email = st.text_input("Email Address", value=saved_email)
+                password = st.text_input("Password", type="password", key="register_password")
+                confirm_password = st.text_input("Confirm Password", type="password", key="register_confirm_password")
                 experience = st.selectbox("Experience Level", ["Beginner", "Intermediate", "Advanced"])
                 goals = st.multiselect("Learning Goals", 
                                    ["Creativity", "Problem Solving", "Science", "Mathematics", "Programming"])
 
                 if st.form_submit_button("Create Profile", use_container_width=True):
-                    if name and email:
-                        user_id = create_user(name, email, experience, ", ".join(goals))
+                    if not (name and email and password and confirm_password):
+                        st.error("Please fill in all required fields.")
+                    elif password != confirm_password:
+                        st.error("Passwords do not match.")
+                    else:
+                        user_id = create_user(name, email, password, experience, ", ".join(goals))
                         if user_id:
                             st.session_state.user_id = user_id
-                            st.session_state.current_user = (user_id, name, email, experience, ", ".join(goals))
+                            st.session_state.current_user = (user_id, name, email, password, experience, ", ".join(goals))
                             st.session_state.authentication_status = True
                             # Store user data in cookie
                             user_data = {
@@ -1247,8 +1257,6 @@ elif selected == "Profile":
                             st.rerun()
                         else:
                             st.error("Email already exists. Please use a different email.")
-                    else:
-                        st.error("Please fill in all required fields.")
 
         with col2:
             st.markdown("### 🎯 Why Profile Matters")
@@ -1267,8 +1275,8 @@ elif selected == "Profile":
         # Load saved values if user is logged in
         saved_name = st.session_state.current_user[1]
         saved_email = st.session_state.current_user[2]
-        saved_experience = st.session_state.current_user[3]
-        saved_goals = [g.strip() for g in st.session_state.current_user[4].split(",")]
+        saved_experience = st.session_state.current_user[4]
+        saved_goals = [g.strip() for g in st.session_state.current_user[5].split(",")]
         
         with col1:
             with st.form("profile_form"):
