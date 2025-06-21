@@ -1292,6 +1292,11 @@ elif selected == "Profile":
                         except:
                             # Cookie might not exist, which is fine
                             pass
+                        try:
+                            cookie_manager.delete('user_data')
+                        except:
+                            # Cookie might not exist, which is fine
+                            pass
                         st.session_state.current_user = None
                         st.session_state.user_id = None
                         st.session_state.authentication_status = None
